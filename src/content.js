@@ -17,12 +17,12 @@ export const content = {
     role: 'Engineering Graduate',
     email: 'harshvardhanpatil099@gmail.com',
     phone: '+91 8123347973',
-    location: 'City, Country',
+    location: 'Belagavi, Karnataka, India',
     resumeUrl: asset('/assets/resume.pdf'),
     socials: [
-      { name: 'LinkedIn', url: 'https://linkedin.com', icon: 'linkedin' },
-      { name: 'GitHub', url: 'https://github.com', icon: 'github' },
-      { name: 'Email', url: 'mailto:hello@yourdomain.com', icon: 'email' }
+      { name: 'LinkedIn', url: 'https://www.linkedin.com/in/harshvardhan-patil-482757267/', icon: 'linkedin' },
+      { name: 'GitHub', url: 'https://github.com/harshvardhan2024', icon: 'github' },
+      { name: 'Email', url: 'mailto:hvardhanpatil099@gmail.com', icon: 'email' }
     ]
   },
   hero: {
