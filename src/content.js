@@ -51,9 +51,8 @@ export const content = {
       tags: ['React', 'Node.js', 'Python'],
       media: [
         { type: 'image', src: asset('/assets/projects/p1-1.jpg') },
-        { type: 'image', src: asset('/assets/projects/p1-2.jpg') },
-        { type: 'image', src: asset('/assets/projects/p1-3.jpg') },
-        { type: 'image', src: asset('/assets/projects/p1-4.jpg') }
+        { type: 'video', src: asset('/assets/projects/p1-vid.mp4') },
+        { type: 'image', src: asset('/assets/projects/p1-2.jpg') }
       ]
     },
     {
