@@ -230,3 +230,8 @@ export const content = {
     closingLine: 'Designed & developed with precision and modern web engineering.'
   }
 };
+export const contactConfig = {
+  // Web3Forms uses a single endpoint and an access key
+  formEndpoint: "https://api.web3forms.com/submit",
+  accessKey: "affcd3f3-4488-413e-8c38-d9a22628cebf",
+};
