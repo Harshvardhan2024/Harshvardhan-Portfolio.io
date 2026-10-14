@@ -104,7 +104,7 @@ const Contact = () => {
                 </div>
               </div>
 
-            <a 
+              <a 
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(content.personal.location)}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -118,6 +118,7 @@ const Contact = () => {
                   <div className="font-medium text-sm sm:text-base truncate">{content.personal.location}</div>
                 </div>
               </a>
+            </div>
             
             <div className="flex gap-4 mt-8 justify-center lg:justify-start">
               {content.personal.socials.map((social, idx) => (
@@ -135,7 +136,6 @@ const Contact = () => {
             </div>
           </motion.div>
           
-          {/* Contact Form Card */}
           <motion.div 
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

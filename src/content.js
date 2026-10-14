@@ -15,8 +15,8 @@ export const content = {
     name: 'Harshvardhan Patil',
     monogram: 'HP',
     role: 'Engineering Graduate',
-    email: 'hello@yourdomain.com',
-    phone: '+1 (555) 123-4567',
+    email: 'harshvardhanpatil099@gmail.com',
+    phone: '+91 8123347973',
     location: 'City, Country',
     resumeUrl: asset('/assets/resume.pdf'),
     socials: [
