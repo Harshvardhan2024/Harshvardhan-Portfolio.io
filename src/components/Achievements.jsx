@@ -8,6 +8,9 @@ const Achievements = () => {
   
   const achievements = content.achievements.slice(0, 6); // Exactly SIX panels
   
+  // Triplicate for infinite seamless marquee loop on desktop
+  const desktopRailItems = [...achievements, ...achievements, ...achievements];
+
   // Mobile horizontal auto-scroll & center detection
   const mobileScrollRef = useRef(null);
   const isInteractingRef = useRef(false);
@@ -83,75 +86,72 @@ const Achievements = () => {
           DESKTOP: CONTINUOUS SLANTED-PANEL MARQUEE RAIL
           ======================================================== */}
       <div className="hidden md:flex relative w-full h-[460px] items-center overflow-visible">
-        <div
-          className="flex absolute left-0 will-change-transform no-scrollbar py-8"
-          style={{
-            width: 'max-content',
-            animation: 'achievementRail 45s linear infinite',
-            animationPlayState: hoveredId !== null ? 'paused' : 'running'
+        <div 
+          className={`flex gap-6 absolute left-0 will-change-transform no-scrollbar py-8 ${
+            hoveredId !== null ? 'animate-none' : ''
+          }`}
+          style={{ 
+            width: 'max-content', 
+            animation: hoveredId !== null ? 'none' : 'achievementRail 45s linear infinite' 
           }}
         >
-          {[0, 1, 2].map((setIdx) => (
-            <div key={`set-${setIdx}`} className="flex gap-6 pr-6 flex-shrink-0">
-              {achievements.map((item) => {
-                const uniqueId = `desktop-${item.id}-${setIdx}`;
-                const isHovered = hoveredId === uniqueId;
-                const isAnyHovered = hoveredId !== null;
-
-                return (
-                  <div
-                    key={uniqueId}
-                    onMouseEnter={() => setHoveredId(uniqueId)}
-                    onMouseLeave={() => setHoveredId(null)}
-                    className={`relative h-[340px] w-[260px] transition-all duration-300 ease-out cursor-pointer origin-center flex-shrink-0 ${
-                      isHovered
-                        ? 'scale-[1.3] z-30 shadow-theme ring-2 ring-accent'
-                        : isAnyHovered
-                          ? 'opacity-40 scale-95 z-10'
-                          : 'hover:scale-105 z-10'
-                    }`}
-                    style={{
-                      clipPath: 'polygon(15% 0, 100% 0, 85% 100%, 0% 100%)'
+          {desktopRailItems.map((item, idx) => {
+            const uniqueId = `desktop-${item.id}-${idx}`;
+            const isHovered = hoveredId === uniqueId;
+            const isAnyHovered = hoveredId !== null;
+            
+            return (
+              <div 
+                key={uniqueId}
+                onMouseEnter={() => setHoveredId(uniqueId)}
+                onMouseLeave={() => setHoveredId(null)}
+                className={`relative h-[340px] w-[260px] transition-all duration-300 ease-out cursor-pointer origin-center flex-shrink-0 ${
+                  isHovered 
+                    ? 'scale-[1.3] z-30 mx-8 shadow-theme ring-2 ring-accent' 
+                    : isAnyHovered 
+                      ? 'opacity-40 scale-95 z-10' 
+                      : 'hover:scale-105 z-10'
+                }`}
+                style={{
+                  clipPath: 'polygon(15% 0, 100% 0, 85% 100%, 0% 100%)'
+                }}
+              >
+                {/* Image Background */}
+                <div className="absolute inset-0 w-full h-full bg-surface">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-full object-cover scale-125"
+                    onError={(e) => { 
+                      e.target.style.display = 'none'; 
+                      e.target.nextSibling.style.display = 'flex'; 
                     }}
-                  >
-                    {/* Image Background */}
-                    <div className="absolute inset-0 w-full h-full bg-surface">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover scale-125"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
-                        }}
-                      />
-                      <div style={{ display: 'none' }} className="w-full h-full bg-surface-2 items-center justify-center">
-                        <span className="text-text-muted font-display text-xs">IMG</span>
-                      </div>
-                    </div>
-
-                    {/* Embedded Description Overlay inside slanted panel */}
-                    <div className={`absolute inset-0 flex flex-col justify-end p-5 pb-7 transition-all duration-300 ${
-                      isHovered
-                        ? 'bg-gradient-to-t from-black/95 via-black/75 to-transparent'
-                        : 'bg-gradient-to-t from-black/85 via-black/50 to-transparent'
-                    }`}>
-                      <div className="transform skew-x-12 ml-3">
-                        <h3 className="text-accent-text font-display font-bold text-lg leading-tight mb-1">
-                          {item.title}
-                        </h3>
-                        <p className={`text-[#FFF8E7] text-xs font-body transition-all duration-300 leading-snug ${
-                          isHovered ? 'opacity-100 max-h-24 mt-1.5' : 'opacity-85 line-clamp-2'
-                        }`}>
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
+                  />
+                  <div style={{ display: 'none' }} className="w-full h-full bg-surface-2 items-center justify-center">
+                    <span className="text-text-muted font-display text-xs">IMG</span>
                   </div>
-                );
-              })}
-            </div>
-          ))}
+                </div>
+
+                {/* Embedded Description Overlay inside slanted panel */}
+                <div className={`absolute inset-0 flex flex-col justify-end p-5 pb-7 transition-all duration-300 ${
+                  isHovered 
+                    ? 'bg-gradient-to-t from-black/95 via-black/75 to-transparent' 
+                    : 'bg-gradient-to-t from-black/85 via-black/50 to-transparent'
+                }`}>
+                  <div className="transform skew-x-12 ml-3">
+                    <h3 className="text-accent-text font-display font-bold text-lg leading-tight mb-1">
+                      {item.title}
+                    </h3>
+                    <p className={`text-[#FFF8E7] text-xs font-body transition-all duration-300 leading-snug ${
+                      isHovered ? 'opacity-100 max-h-24 mt-1.5' : 'opacity-85 line-clamp-2'
+                    }`}>
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -233,7 +233,7 @@ const Achievements = () => {
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes achievementRail {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-33.3333%); }
+          100% { transform: translateX(calc(-33.333% - 1.5rem)); }
         }
       `}} />
     </section>
