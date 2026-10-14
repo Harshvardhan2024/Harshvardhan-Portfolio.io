@@ -8,8 +8,8 @@ const Navbar = ({ toggleTheme, isDark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
-  const fullName = content.personal.name || "Harshvardhan Patil";
-  const brandMark = content.personal.monogram || "HP";
+  const fullName = content.personal.name || 'Harshvardhan Patil';
+  const brandMark = content.personal.monogram || 'HP';
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -60,138 +60,104 @@ const Navbar = ({ toggleTheme, isDark }) => {
   }, []);
 
   const closeMenu = () => setIsMenuOpen(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const isCompact = !isHeroInView;
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
     <>
-      <header 
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ease-out border-b ${
-          isCompact
-            ? 'bg-bg/95 backdrop-blur-md shadow-theme border-border py-3'
-            : 'bg-bg/70 backdrop-blur-sm border-transparent py-4 sm:py-5'
+      {/* FLOATING CAPSULE NAVBAR ANCHORED TOP-CENTER */}
+      <header
+        className={`fixed z-50 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 rounded-full border backdrop-blur-md ${
+          isHeroInView
+            ? 'top-4 w-[95%] max-w-5xl px-3 sm:px-6 py-2 sm:py-2.5 bg-surface/85 dark:bg-slate-900/85 border-border/80 shadow-md'
+            : 'top-3 sm:top-4 w-[95%] max-w-5xl px-3 sm:px-6 py-2 sm:py-2.5 bg-surface/95 dark:bg-slate-900/95 border-border shadow-theme'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex justify-between items-center relative">
+        <div className="w-full flex justify-between items-center gap-2 sm:gap-4 relative">
           
-          {/* LOGO / BRAND MARK */}
-          <a 
-            href="#" 
-            className="flex items-center gap-2.5 font-display font-bold text-text hover:text-accent-text transition-colors tracking-widest"
+          {/* BRANDING: Stylized "HP" icon box followed immediately by full name */}
+          <a
+            href="#"
+            className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0"
+            aria-label="Home"
           >
-            <span className="w-9 h-9 rounded-xl bg-accent/15 border border-accent/40 text-accent-text flex items-center justify-center text-sm font-bold shadow-sm">
+            <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent/20 border border-accent/40 text-accent-text flex items-center justify-center text-xs sm:text-sm font-bold font-display shadow-sm group-hover:scale-105 transition-transform">
               {brandMark}
             </span>
-            <span className={`text-base sm:text-lg font-heading tracking-wide transition-opacity duration-200 ${
-              isCompact ? 'inline-block' : 'hidden sm:inline-block'
-            }`}>
-              {isCompact ? fullName : brandMark}
+            <span className="text-sm sm:text-base font-heading font-bold text-text tracking-wide group-hover:text-accent-text transition-colors whitespace-nowrap">
+              {fullName}
             </span>
           </a>
 
-          {/* DESKTOP NAV */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
-            {navLinks.map(link => {
-              const isActive = activeSection === link.href.slice(1);
-              return (
-                <a 
-                  key={link.name} 
-                  href={link.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`text-sm font-heading font-medium transition-colors relative py-1 ${
-                    isActive
-                      ? 'text-accent-text font-bold'
-                      : 'text-text/80 hover:text-accent-text'
-                  }`}
-                >
-                  {link.name}
-                  {isActive && (
-                    <motion.span 
-                      layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full" 
-                    />
-                  )}
-                </a>
-              );
-            })}
-            
-            <button 
+          {/* PERMANENTLY VISIBLE CONTROLS ACROSS ALL SCREEN SIZES */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+            {/* Theme Toggle */}
+            <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-full text-text hover:text-accent-text hover:bg-surface-2/60 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-text hover:text-accent-text hover:bg-surface-2/70 transition-colors"
               aria-label="Toggle Theme"
             >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            
-            <a href={content.personal.resumeUrl} download className="btn-gold text-sm py-2 px-5 shadow-sm">
-              Resume
-            </a>
-          </nav>
-
-          {/* MOBILE CONTROLS */}
-          <div className="flex lg:hidden items-center gap-2">
-            <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-text hover:text-accent-text hover:bg-surface-2/60 transition-colors"
-              aria-label="Toggle Theme"
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              {isDark ? <Sun size={18} className="sm:w-5 sm:h-5" /> : <Moon size={18} className="sm:w-5 sm:h-5" />}
             </button>
 
-            <a 
-              href="#contact" 
-              className="w-9 h-9 rounded-full border border-border text-text flex items-center justify-center hover:border-accent hover:text-accent-text transition-colors"
-              aria-label="Contact Me"
+            {/* Contact Button */}
+            <a
+              href="#contact"
+              className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-border text-text hover:border-accent hover:text-accent-text transition-colors text-xs sm:text-sm font-heading font-medium flex items-center gap-1.5"
+              aria-label="Contact"
             >
-              <Mail size={16} />
+              <Mail size={13} className="sm:w-4 sm:h-4" />
+              <span>Contact</span>
             </a>
 
-            <a 
-              href={content.personal.resumeUrl} 
-              download 
-              className="w-9 h-9 rounded-full bg-accent text-on-accent flex items-center justify-center hover:bg-accent-hover transition-colors shadow-sm"
-              aria-label="Download Resume"
+            {/* Resume Button */}
+            <a
+              href={content.personal.resumeUrl}
+              download
+              className="btn-gold text-xs sm:text-sm py-1 sm:py-1.5 px-3 sm:px-4 shadow-sm flex items-center gap-1.5"
+              aria-label="Resume"
             >
-              <Download size={16} />
+              <Download size={13} className="sm:w-4 sm:h-4" />
+              <span>Resume</span>
             </a>
 
-            <button 
+            {/* Hamburger Menu Toggle (Standard 3-line icon, all screens) */}
+            <button
               onClick={toggleMenu}
-              className="p-2 rounded-full text-text hover:text-accent-text hover:bg-surface-2/60 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-text hover:text-accent-text hover:bg-surface-2/70 transition-colors ml-0.5"
               aria-label="Toggle Menu"
               aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
 
         </div>
       </header>
 
-      {/* UNIFIED MOBILE DRAWER OVERLAY */}
+      {/* HAMBURGER MENU DROPDOWN FOR ALL SCREENS */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md" 
-              onClick={closeMenu} 
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              onClick={closeMenu}
             />
 
             <motion.div
-              initial={{ opacity: 0, y: -16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="fixed z-50 inset-x-4 top-[68px] bg-surface border border-border p-6 rounded-2xl shadow-2xl max-w-lg mx-auto overflow-hidden"
+              initial={{ opacity: 0, y: -12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="fixed z-50 top-16 sm:top-20 right-4 sm:right-6 md:right-12 w-[92%] sm:w-80 max-w-sm bg-surface dark:bg-slate-900 border border-border p-5 rounded-2xl shadow-2xl overflow-hidden"
             >
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1">
                 <div className="text-[11px] font-display uppercase tracking-widest text-text-muted px-3 py-1 mb-1">
                   Navigation
                 </div>
+
                 {navLinks.map((link) => {
                   const isActive = activeSection === link.href.slice(1);
                   return (
@@ -199,7 +165,7 @@ const Navbar = ({ toggleTheme, isDark }) => {
                       key={link.name}
                       href={link.href}
                       onClick={closeMenu}
-                      className={`px-4 py-2.5 rounded-xl text-base font-heading font-medium transition-all flex items-center justify-between ${
+                      className={`px-4 py-2 rounded-xl text-sm sm:text-base font-heading font-medium transition-all flex items-center justify-between ${
                         isActive
                           ? 'bg-accent/15 text-accent-text font-bold border-r-2 border-accent'
                           : 'text-text hover:bg-surface-2 hover:text-accent-text'
@@ -211,13 +177,13 @@ const Navbar = ({ toggleTheme, isDark }) => {
                   );
                 })}
 
-                <div className="border-t border-border/80 my-2 pt-3 flex items-center justify-between px-3">
+                <div className="border-t border-border/80 my-2 pt-2.5 flex items-center justify-between px-3">
                   <span className="text-xs text-text-muted font-heading">Appearance</span>
                   <button
                     onClick={toggleTheme}
-                    className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-2 border border-border text-xs font-heading text-text hover:text-accent-text transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-2 border border-border text-xs font-heading text-text hover:text-accent-text transition-colors"
                   >
-                    {isDark ? <Sun size={15} /> : <Moon size={15} />}
+                    {isDark ? <Sun size={14} /> : <Moon size={14} />}
                     <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
                   </button>
                 </div>

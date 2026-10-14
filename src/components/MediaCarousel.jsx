@@ -65,9 +65,16 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
   }, []);
 
+  if (!media || media.length === 0) {
+    return null;
+  }
+
   const ErrorFallback = () => (
-    <div className="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400">
-      <span className="font-display tracking-widest text-sm">MEDIA UNAVAILABLE</span>
+    <div className="w-full h-full flex flex-col items-center justify-center bg-surface-2 text-text-muted p-4">
+      <span className="font-display tracking-widest text-xs font-semibold text-accent-text uppercase mb-1">
+        Project Showcase
+      </span>
+      <span className="text-xs text-text-muted font-body">Interactive Preview</span>
     </div>
   );
 
