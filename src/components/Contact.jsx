@@ -34,22 +34,29 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    
     setStatus('sending');
+    
     try {
-      if (content.contact.formEndpoint.includes('YOUR_ENDPOINT_HERE')) {
-        setStatus('unconfigured');
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: "affcd3f3-4488-413e-8c38-d9a22628cebf",
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
+        })
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
       } else {
-        const response = await fetch(content.contact.formEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-        if (response.ok) {
-          setStatus('success');
-          setFormData({ name: '', email: '', message: '' });
-        } else {
-          setStatus('error');
-        }
+        setStatus('error');
       }
     } catch (err) {
       setStatus('error');
@@ -198,11 +205,6 @@ const Contact = () => {
               {status === 'success' && (
                 <p className="text-green-600 dark:text-green-400 text-center text-sm font-medium">
                   Message sent successfully!
-                </p>
-              )}
-              {status === 'unconfigured' && (
-                <p className="text-accent-text text-center text-xs font-medium">
-                  Add a Formspree or Web3Forms endpoint in src/content.js to enable live sending.
                 </p>
               )}
               {status === 'error' && (
