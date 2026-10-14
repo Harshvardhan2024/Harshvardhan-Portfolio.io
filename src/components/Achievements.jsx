@@ -85,9 +85,9 @@ const Achievements = () => {
       {/* ========================================================
           DESKTOP: CONTINUOUS SLANTED-PANEL MARQUEE RAIL
           ======================================================== */}
-      <div className="hidden md:flex relative w-full h-[460px] items-center overflow-visible">
+      <div className="hidden md:flex relative w-full h-[520px] items-center overflow-visible">
         <div 
-          className={`flex gap-6 absolute left-0 will-change-transform no-scrollbar py-8 ${
+          className={`flex gap-6 absolute left-0 will-change-transform no-scrollbar py-12 ${
             hoveredId !== null ? 'animate-none' : ''
           }`}
           style={{ 
@@ -107,7 +107,7 @@ const Achievements = () => {
                 onMouseLeave={() => setHoveredId(null)}
                 className={`relative h-[340px] w-[260px] transition-all duration-300 ease-out cursor-pointer origin-center flex-shrink-0 ${
                   isHovered 
-                    ? 'scale-[1.3] z-30 mx-8 shadow-theme ring-2 ring-accent' 
+                    ? 'scale-[1.45] z-30 mx-12 shadow-2xl ring-2 ring-accent' 
                     : isAnyHovered 
                       ? 'opacity-40 scale-95 z-10' 
                       : 'hover:scale-105 z-10'
@@ -159,7 +159,7 @@ const Achievements = () => {
           MOBILE: DYNAMIC HORIZONTAL CONTINUOUS RAIL
           ======================================================== */}
       <div 
-        className="md:hidden relative w-full overflow-hidden py-4"
+        className="md:hidden relative w-full overflow-hidden py-8"
         onClick={() => setHeldId(null)}
       >
         <div
@@ -168,7 +168,7 @@ const Achievements = () => {
           onTouchEnd={onTouchEnd}
           onPointerDown={onTouchStart}
           onPointerUp={onTouchEnd}
-          className="flex overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory gap-6 px-16 py-8 items-center"
+          className="flex overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory gap-6 px-16 py-10 items-center"
           style={{
             WebkitOverflowScrolling: 'touch'
           }}
@@ -188,7 +188,7 @@ const Achievements = () => {
                 }}
                 className={`snap-center relative h-[310px] w-[230px] flex-shrink-0 transition-all duration-300 ease-out cursor-pointer origin-center ${
                   isEnlarged 
-                    ? 'scale-[1.25] z-20 shadow-theme ring-2 ring-accent opacity-100 mx-5' 
+                    ? 'scale-[1.38] z-20 shadow-2xl ring-2 ring-accent opacity-100 mx-8' 
                     : 'scale-[0.9] opacity-60 z-10'
                 }`}
                 style={{
