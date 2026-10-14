@@ -32,10 +32,9 @@ npm run build
 
 ## Deploy
 
-### Vercel
+### GitHub Pages (Automated via GitHub Actions)
 
-Push the repository to GitHub, import it into Vercel, and use the default Vite settings: build command `npm run build`, output directory `dist`.
+Pushes to the `main` branch automatically build and deploy the portfolio to GitHub Pages using the workflow located at `.github/workflows/deploy.yml`.
 
-### Netlify
-
-Push the repository to GitHub, create a site from the repository, then set build command `npm run build` and publish directory `dist`.
+- **Live URL**: https://harshvardhan2024.github.io/Harshvardhan-Portfolio.io/
+- **Settings**: Repository Settings > Pages > Build and deployment Source is set to **GitHub Actions**.
