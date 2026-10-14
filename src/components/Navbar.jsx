@@ -9,7 +9,7 @@ const Navbar = ({ toggleTheme, isDark }) => {
   const [activeSection, setActiveSection] = useState('hero');
 
   const fullName = content.personal.name || "Harshvardhan Patil";
-  const brandMark = content.personal.monogram || "Harsh";
+  const brandMark = content.personal.monogram || "HP";
 
   const navLinks = [
     { name: 'About', href: '#about' },
