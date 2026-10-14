@@ -21,18 +21,34 @@ const Navbar = ({ toggleTheme, isDark }) => {
     { name: 'Contact', href: '#contact' }
   ];
 
+  // Smooth scroll detection between Hero and other sections
   useEffect(() => {
-    const heroEl = document.getElementById('hero');
-    if (!heroEl) return;
+    let ticking = false;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsHeroInView(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-    observer.observe(heroEl);
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const heroEl = document.getElementById('hero');
+          if (heroEl) {
+            const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+            // Transition smoothly as the hero scrolls out of view into other sections
+            const isScrolledPast = window.scrollY >= (heroBottom - 100);
+            setIsHeroInView(!isScrolledPast);
+          } else {
+            setIsHeroInView(window.scrollY < 80);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Track active section for nav drawer
   useEffect(() => {
     const sections = ['hero', ...navLinks.map(({ href }) => href.slice(1))]
       .map((id) => document.getElementById(id))
@@ -65,21 +81,19 @@ const Navbar = ({ toggleTheme, isDark }) => {
   return (
     <>
       {/* 
-        1. HERO STATE: Full-width top bar with frosted glass (backdrop-blur-md)
-        2. SCROLLED STATE: Centered floating capsule/pill (backdrop-blur-none, bg-slate-900 border border-slate-800 shadow-2xl)
+        Fixed Navigation Wrapper:
+        Coordinates edge-to-edge hero bar and centered floating pill with silky-smooth cubic-bezier transition
       */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
-          isHeroInView
-            ? 'w-full bg-surface/85 dark:bg-slate-950/50 backdrop-blur-md border-b border-border/60 dark:border-white/10 py-3.5 sm:py-4 px-4 sm:px-8'
-            : 'w-full flex justify-center px-3 sm:px-4 pointer-events-none pt-3 sm:pt-4'
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isHeroInView ? 'px-0' : 'px-3 sm:px-4'
         }`}
       >
         <div
-          className={`w-full flex justify-between items-center transition-all duration-300 ease-out ${
+          className={`w-full flex justify-between items-center pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[max-width,border-radius,background-color,box-shadow,transform,padding,margin] ${
             isHeroInView
-              ? 'max-w-7xl mx-auto'
-              : 'max-w-5xl mx-auto rounded-full bg-surface dark:bg-slate-900 border border-border dark:border-slate-800 shadow-2xl px-4 sm:px-6 py-2.5 sm:py-3 pointer-events-auto backdrop-blur-none'
+              ? 'max-w-full rounded-none bg-surface/85 dark:bg-slate-950/50 backdrop-blur-md border-b border-border/60 dark:border-white/10 shadow-none px-4 sm:px-8 py-3.5 sm:py-4 mt-0'
+              : 'max-w-5xl rounded-full bg-surface dark:bg-slate-900 backdrop-blur-none border border-border dark:border-slate-800 shadow-2xl px-4 sm:px-6 py-2.5 sm:py-3 mt-3 sm:mt-4'
           }`}
         >
           {/* BRANDING: Stylized "HP" box + full name */}
