@@ -104,7 +104,12 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-text bg-surface border border-border p-3.5 rounded-xl shadow-theme">
+            <a 
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(content.personal.location)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 text-text bg-surface border border-border p-3.5 rounded-xl shadow-theme hover:border-accent hover:text-accent transition-colors duration-300 cursor-pointer"
+              >
                 <div className="w-11 h-11 bg-surface-2 border border-border rounded-lg flex items-center justify-center text-accent-text flex-shrink-0">
                   <MapPin size={18} />
                 </div>
@@ -112,8 +117,7 @@ const Contact = () => {
                   <div className="text-xs text-text-muted font-heading uppercase tracking-wider">Location</div>
                   <div className="font-medium text-sm sm:text-base truncate">{content.personal.location}</div>
                 </div>
-              </div>
-            </div>
+              </a>
             
             <div className="flex gap-4 mt-8 justify-center lg:justify-start">
               {content.personal.socials.map((social, idx) => (
