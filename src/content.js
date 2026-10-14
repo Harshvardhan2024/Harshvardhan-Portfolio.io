@@ -194,8 +194,8 @@ export const content = {
         degree: 'B.E. AERONAUTICAL ENGINEERING',
         institution: 'KLS Gogte Institute of Technology, Belagavi',
         focus: 'UAV Systems · Structures · Additive Manufacturing · Robotics',
-        score: '[CGPA VALUE] / 10',
-        caption: 'CGPA / 10'
+        score: '7.5 / 10',
+        caption: '7.5 / 10'
       },
       {
         id: 'ed2',
@@ -203,7 +203,7 @@ export const content = {
         startYear: '2020',
         endYear: '2022',
         icon: 'BookOpen',
-        degree: 'PRE-UNIVERSITY CERTIFICATE (PUC)',
+        degree: 'PRE-UNIVERSITY College',
         institution: 'RLS PUC College, Belagavi',
         focus: 'PCMB — Physics · Chemistry · Mathematics · Biology',
         score: '90%',
@@ -219,7 +219,7 @@ export const content = {
         institution: "St. Xavier's High School, Belagavi",
         focus: 'Secondary Education',
         score: '86%',
-        caption: 'SSC SCORE'
+        caption: 'SSLC SCORE'
       }
     ],
     languages: ['English', 'Hindi', 'Kannada', 'Marathi']
