@@ -27,10 +27,10 @@ export const content = {
   },
   hero: {
     slides: [
-      { headline: 'BUILDING THE', headlineGold: 'FUTURE', subtitle: 'Software Engineering Graduate with a passion for scalable systems.' },
-      { headline: 'DESIGNING', headlineGold: 'SOLUTIONS', subtitle: 'Bridging the gap between complex logic and user experience.' },
-      { headline: 'CREATING', headlineGold: 'IMPACT', subtitle: 'Driven by innovation, precision, and continuous learning.' },
-      { headline: 'TURNING IDEAS', headlineGold: 'INTO REALITY', subtitle: 'Ready to tackle hard problems and build great products.' }
+      { headline: 'HARSHVARDHAN', headlineGold: 'PATIL', subtitle: 'Curiousity Driven Mind' },
+      { headline: 'ENGINEERING', headlineGold: 'SOLUTIONS', subtitle: 'From Concepts to Flight' },
+      { headline: 'INTO THE', headlineGold: 'ORBIT', subtitle: 'Devoted to Building Systems that Fly' },
+      { headline: 'AERONAUTICAL', headlineGold: 'ENGINEER', subtitle: 'Propulsion, Aerodynamics, CAD, FEA' }
     ]
   },
   about: {
