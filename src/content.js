@@ -59,40 +59,40 @@ export const content = {
     },
     {
       id: 'p2',
-      title: 'Project Beta',
-      description: 'An innovative mobile application that connects communities.',
-      role: 'Full Stack Engineer',
-      link: '',
+      title: 'IMECE -Window cleaning Robot',
+      description: 'AI-powered glass cleaning bot that grips strong, cleans deep, and endures flawlessly. Project built for IMECE Brainbolt round-1 which got shortlisted as best design of problem statement among 65 teams all over India',
+      role: 'Design Egineer',
+      link: 'https://docs.google.com/presentation/d/1S6Eduz2iv_CYGhNp2oEdtD9WgwDg1BlHx_OJj6sOfBg/edit?usp=drive_link',
       tags: ['React Native', 'Firebase', 'GraphQL'],
       media: [
-        { type: 'image', src: asset('/assets/projects/p2-1.jpg') },
         { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
+        { type: 'image', src: asset('/assets/projects/p2-1.jpg') },
         { type: 'image', src: asset('/assets/projects/p2-2.jpg') }
       ]
     },
     {
       id: 'p3',
-      title: 'Project Gamma',
-      description: 'A machine learning model for predictive maintenance in IoT devices.',
-      role: 'ML Engineer',
+      title: 'Precision ball sorting machine - ASME EFx India 2025',
+      description: 'Two different iterations of a precision ball sorting machine designed for high-speed, accurate sorting of spherical objects based on size and material properties. The project uses completely mechanical system based gravity sorting mechanism.',
+      role: 'Design Engineer',
       link: '',
       tags: ['Python', 'TensorFlow', 'AWS'],
       media: [
         { type: 'image', src: asset('/assets/projects/p3-1.jpg') },
-        { type: 'video', src: asset('/assets/projects/p3-vid.mp4') },
+        { type: 'link', src: 'https://img.youtube.com/vi/DuspNCTkFSs/maxresdefault.jpg', href: 'https://youtu.be/DuspNCTkFSs', label: 'Watch video' },
         { type: 'image', src: asset('/assets/projects/p3-2.jpg') }
       ]
     },
     {
       id: 'p4',
-      title: 'Project Delta',
-      description: 'A secure, decentralized platform for digital identity verification.',
-      role: 'Blockchain Developer',
-      link: '',
+      title: '6-DOF Robotic Arm - Design and Virtual Simulation - IMECE Brainbolt 2025 TOP 4',
+      description: 'A 6-DOF robotic arm designed for precise manipulation and virtual simulation using custom designed cycloidal actuators.',
+      role: 'Design and Simulation Engineer',
+      link: 'https://drive.google.com/file/d/1VfIxhenNcjO74dll2J-7FH2hielxqF6z/view?usp=drive_link',
       tags: ['Solidity', 'Web3.js', 'React'],
       media: [
-        { type: 'image', src: asset('/assets/projects/p4-1.jpg') },
-        { type: 'video', src: asset('/assets/projects/p4-vid.mp4') },
+        { type: 'link', src: 'https://img.youtube.com/vi/zujK3HNhVKE/maxresdefault.jpg', href: 'https://youtu.be/zujK3HNhVKE', label: 'Watch video' } ,
+        { type: 'link', src: 'https://img.youtube.com/vi/7Ec9ldQz7Xs/maxresdefault.jpg', href: 'https://youtube.com/shorts/7Ec9ldQz7Xs', label: 'Watch video' } ,
         { type: 'image', src: asset('/assets/projects/p4-2.jpg') }
       ]
     }
