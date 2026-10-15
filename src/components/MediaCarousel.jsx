@@ -71,15 +71,34 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
     </div>
   );
 
+  // Keyboard navigation when hovered
+  useEffect(() => {
+    if (!isHovered) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        setCurrentIndex((prev) => (prev - 1 + media.length) % media.length);
+      } else if (e.key === 'ArrowRight') {
+        setCurrentIndex((prev) => (prev + 1) % media.length);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isHovered, media.length]);
+
   return (
     <div 
       ref={(node) => { containerRef.current = node; inViewRef(node); }}
-      className={clsx("relative w-full aspect-video bg-black group overflow-hidden", className)}
+      className={clsx("relative w-full aspect-video bg-black group overflow-hidden select-none", className)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={toggleFullscreen}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); prev(e); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(e); }
+      }}
+      aria-label="Media carousel"
     >
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full" onClick={toggleFullscreen}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -91,7 +110,7 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
           >
             <motion.div
               className="w-full h-full"
-              animate={{ scale: !shouldReduceMotion && isHovered ? 1.1 : 1 }}
+              animate={{ scale: !shouldReduceMotion && isHovered ? 1.05 : 1 }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               {currentMedia.type === 'image' ? (
@@ -116,47 +135,77 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
             </motion.div>
           </motion.div>
         </AnimatePresence>
-
-        {/* Controls Overlay */}
-        <div className="absolute inset-0 flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-          <div className="flex justify-end gap-2">
-            {currentMedia.type === 'video' && (
-              <>
-                <button onClick={togglePlay} className="p-2 bg-black/50 rounded-full text-white hover:text-gold transition">
-                  {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-                </button>
-                <button onClick={toggleMute} className="p-2 bg-black/50 rounded-full text-white hover:text-gold transition">
-                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                </button>
-              </>
-            )}
-            <button onClick={toggleFullscreen} className="p-2 bg-black/50 rounded-full text-gold border border-gold/40 hover:bg-gold hover:text-dark transition" aria-label="Expand media">
-              <Maximize2 size={18} />
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between w-full mt-auto">
-            <button onClick={prev} className="p-2 bg-black/50 rounded-full text-white hover:text-gold transition">
-              <ChevronLeft size={24} />
-            </button>
-            
-            {/* Thumbnails / Dots */}
-            <div className="flex gap-2 bg-black/50 p-2 rounded-full backdrop-blur-sm">
-              {media.map((_, idx) => (
-                <button 
-                  key={idx}
-                  onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
-                  className={clsx("w-2 h-2 rounded-full border border-transparent transition-all duration-300 hover:border-gold", !shouldReduceMotion && "hover:scale-110", idx === currentIndex ? "bg-gold w-6 border-gold" : "bg-white/50 hover:bg-white")}
-                />
-              ))}
-            </div>
-
-            <button onClick={next} className="p-2 bg-black/50 rounded-full text-white hover:text-gold transition">
-              <ChevronRight size={24} />
-            </button>
-          </div>
-        </div>
       </div>
+
+      {/* Top Controls Overlay (Play/Pause, Mute, Fullscreen) - inset 11% so inside slant-clip */}
+      <div className="absolute top-3 right-[11%] z-20 flex gap-1.5 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
+        {currentMedia.type === 'video' && (
+          <>
+            <button 
+              onClick={togglePlay} 
+              className="w-9 h-9 min-w-[36px] min-h-[36px] bg-black/60 rounded-full text-white hover:text-gold transition flex items-center justify-center"
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+            </button>
+            <button 
+              onClick={toggleMute} 
+              className="w-9 h-9 min-w-[36px] min-h-[36px] bg-black/60 rounded-full text-white hover:text-gold transition flex items-center justify-center"
+              aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+            >
+              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            </button>
+          </>
+        )}
+        <button 
+          onClick={toggleFullscreen} 
+          className="w-9 h-9 min-w-[36px] min-h-[36px] bg-black/60 rounded-full text-gold border border-gold/40 hover:bg-gold hover:text-dark transition flex items-center justify-center" 
+          aria-label="Expand media"
+        >
+          <Maximize2 size={16} />
+        </button>
+      </div>
+
+      {/* BOTH ARROWS VERTICALLY CENTERED, INSET 10% FROM EDGES (INSIDE SLANTED AREA) */}
+      {/* 44px minimum tap targets, wrap-around navigation, visible on desktop and mobile */}
+      {media.length > 1 && (
+        <>
+          {/* Left Arrow */}
+          <button 
+            onClick={prev}
+            className="absolute left-[10%] top-1/2 -translate-y-1/2 z-20 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/60 hover:bg-black/85 text-white hover:text-gold border border-white/25 transition-all duration-200 flex items-center justify-center shadow-lg opacity-90 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 active:scale-95"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          {/* Right Arrow */}
+          <button 
+            onClick={next}
+            className="absolute right-[10%] top-1/2 -translate-y-1/2 z-20 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/60 hover:bg-black/85 text-white hover:text-gold border border-white/25 transition-all duration-200 flex items-center justify-center shadow-lg opacity-90 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 active:scale-95"
+            aria-label="Next slide"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </>
+      )}
+
+      {/* Pagination Dots at Bottom Center */}
+      {media.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-2 bg-black/60 px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-auto">
+          {media.map((_, idx) => (
+            <button 
+              key={idx}
+              onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={clsx(
+                "h-2 rounded-full border border-transparent transition-all duration-300 hover:border-gold",
+                idx === currentIndex ? "bg-gold w-6 border-gold" : "bg-white/50 w-2 hover:bg-white"
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,80 +1,66 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import clsx from 'clsx';
 import { content } from '../content';
 
 const Achievements = () => {
   const [hoveredId, setHoveredId] = useState(null);
-  const [mobileCenterIndex, setMobileCenterIndex] = useState(0);
-  const [heldId, setHeldId] = useState(null);
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
   
   const achievements = content.achievements.slice(0, 6); // Exactly SIX panels
   
-  // Triplicate for infinite seamless marquee loop on desktop
+  // Triplicate for infinite seamless marquee loop on desktop (UNTOUCHED)
   const desktopRailItems = [...achievements, ...achievements, ...achievements];
 
-  // Mobile horizontal auto-scroll & center detection
-  const mobileScrollRef = useRef(null);
-  const isInteractingRef = useRef(false);
-  const rafScrollId = useRef(null);
+  // Mobile carousel refs
+  const mobileContainerRef = useRef(null);
+  const cardRefs = useRef([]);
 
+  // Detect which card is nearest center on mobile scroll
   useEffect(() => {
-    const el = mobileScrollRef.current;
+    const el = mobileContainerRef.current;
     if (!el) return;
 
-    // Detect panel nearest center
     const handleScroll = () => {
       const containerRect = el.getBoundingClientRect();
       const centerX = containerRect.left + containerRect.width / 2;
 
-      const children = Array.from(el.children);
       let closestIdx = 0;
       let minDistance = Infinity;
 
-      children.forEach((child, idx) => {
+      cardRefs.current.forEach((child, idx) => {
+        if (!child) return;
         const rect = child.getBoundingClientRect();
         const childCenter = rect.left + rect.width / 2;
         const dist = Math.abs(centerX - childCenter);
         if (dist < minDistance) {
           minDistance = dist;
-          closestIdx = idx % achievements.length;
+          closestIdx = idx;
         }
       });
 
-      setMobileCenterIndex(closestIdx);
+      setActiveMobileIndex(closestIdx);
     };
 
     el.addEventListener('scroll', handleScroll, { passive: true });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    // Smooth subtle auto-scroll on mobile when not interacting and not held
-    const autoScrollSpeed = 0.5; // pixels per frame
-    const scrollStep = () => {
-      if (!isInteractingRef.current && !heldId && el) {
-        el.scrollLeft += autoScrollSpeed;
-        // Loop back smoothly if reached near end
-        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 10) {
-          el.scrollLeft = 1;
-        }
-      }
-      rafScrollId.current = requestAnimationFrame(scrollStep);
-    };
-
-    rafScrollId.current = requestAnimationFrame(scrollStep);
-
-    return () => {
-      el.removeEventListener('scroll', handleScroll);
-      if (rafScrollId.current) cancelAnimationFrame(rafScrollId.current);
-    };
-  }, [achievements.length, heldId]);
-
-  const onTouchStart = () => {
-    isInteractingRef.current = true;
+  const scrollToMobileIndex = (index) => {
+    const newIndex = Math.max(0, Math.min(index, achievements.length - 1));
+    setActiveMobileIndex(newIndex);
+    const targetCard = cardRefs.current[newIndex];
+    if (targetCard && mobileContainerRef.current) {
+      targetCard.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+      });
+    }
   };
 
-  const onTouchEnd = () => {
-    // Resume auto-scroll after 2s of inactivity
-    setTimeout(() => {
-      isInteractingRef.current = false;
-    }, 2000);
-  };
+  const prevMobile = () => scrollToMobileIndex(activeMobileIndex - 1);
+  const nextMobile = () => scrollToMobileIndex(activeMobileIndex + 1);
 
   return (
     <section id="achievements" className="py-24 bg-bg text-text overflow-hidden transition-colors duration-300">
@@ -156,46 +142,36 @@ const Achievements = () => {
       </div>
 
       {/* ========================================================
-          MOBILE: DYNAMIC HORIZONTAL CONTINUOUS RAIL
+          MOBILE: CAROUSEL-BASED SLIDER WITH PEEKING CARDS
           ======================================================== */}
-      <div 
-        className="md:hidden relative w-full overflow-hidden py-4"
-        onClick={() => setHeldId(null)}
-      >
+      <div className="md:hidden relative w-full overflow-hidden py-4">
+        {/* Swipable Carousel with Scroll-Snap */}
         <div
-          ref={mobileScrollRef}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-          onPointerDown={onTouchStart}
-          onPointerUp={onTouchEnd}
-          className="flex overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory gap-6 px-16 py-8 items-center"
+          ref={mobileContainerRef}
+          className="flex overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory gap-4 px-[calc(50vw-120px)] py-6 items-center"
           style={{
             WebkitOverflowScrolling: 'touch'
           }}
         >
-          {/* Double items on mobile for continuous loop */}
-          {[...achievements, ...achievements].map((item, idx) => {
-            const actualIndex = idx % achievements.length;
-            const isEnlarged = heldId ? heldId === item.id : mobileCenterIndex === actualIndex;
+          {achievements.map((item, idx) => {
+            const isCentered = idx === activeMobileIndex;
 
             return (
               <div 
                 key={`mobile-${item.id}-${idx}`}
                 id={`mobile-${item.id}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setHeldId(heldId === item.id ? null : item.id);
-                }}
-                className={`snap-center relative h-[310px] w-[230px] flex-shrink-0 transition-all duration-300 ease-out cursor-pointer origin-center ${
-                  isEnlarged 
-                    ? 'scale-[1.25] z-20 shadow-theme ring-2 ring-accent opacity-100 mx-5' 
-                    : 'scale-[0.9] opacity-60 z-10'
+                ref={(el) => (cardRefs.current[idx] = el)}
+                onClick={() => scrollToMobileIndex(idx)}
+                className={`snap-center relative h-[320px] w-[240px] flex-shrink-0 transition-all duration-300 ease-out cursor-pointer origin-center ${
+                  isCentered 
+                    ? 'scale-[1.08] z-20 shadow-theme ring-2 ring-accent opacity-100' 
+                    : 'scale-[0.92] opacity-60 z-10'
                 }`}
                 style={{
                   clipPath: 'polygon(15% 0, 100% 0, 85% 100%, 0% 100%)'
                 }}
               >
-                {/* Image */}
+                {/* Image Background */}
                 <div className="absolute inset-0 w-full h-full bg-surface">
                   <img 
                     src={item.image} 
@@ -212,13 +188,13 @@ const Achievements = () => {
                 </div>
 
                 {/* Embedded description overlay */}
-                <div className={`absolute inset-0 flex flex-col justify-end p-5 pb-7 bg-gradient-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-300`}>
+                <div className="absolute inset-0 flex flex-col justify-end p-5 pb-7 bg-gradient-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-300">
                   <div className="transform skew-x-12 ml-2">
                     <h3 className="text-accent-text font-display font-bold text-base leading-tight mb-1">
                       {item.title}
                     </h3>
                     <p className={`text-[#FFF8E7] text-xs font-body leading-snug transition-all duration-300 ${
-                      isEnlarged ? 'opacity-100 max-h-20' : 'opacity-0 max-h-0'
+                      isCentered ? 'opacity-100 max-h-20' : 'opacity-85 line-clamp-2'
                     }`}>
                       {item.description}
                     </p>
@@ -227,6 +203,44 @@ const Achievements = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Mobile Navigation Controls: Arrows and Dots */}
+        <div className="flex items-center justify-between px-6 mt-3 max-w-sm mx-auto">
+          {/* Left Arrow Button (44px min tap target) */}
+          <button
+            onClick={prevMobile}
+            disabled={activeMobileIndex === 0}
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-surface border border-border text-text hover:text-accent-text disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition shadow-sm active:scale-95"
+            aria-label="Previous achievement"
+          >
+            <ChevronLeft size={22} />
+          </button>
+
+          {/* Pagination Dots */}
+          <div className="flex gap-2 bg-surface/80 border border-border/80 px-3.5 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
+            {achievements.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => scrollToMobileIndex(idx)}
+                aria-label={`Go to achievement ${idx + 1}`}
+                className={clsx(
+                  "h-2 rounded-full transition-all duration-300",
+                  idx === activeMobileIndex ? "bg-accent w-6" : "bg-text-muted/40 w-2 hover:bg-text-muted"
+                )}
+              />
+            ))}
+          </div>
+
+          {/* Right Arrow Button (44px min tap target) */}
+          <button
+            onClick={nextMobile}
+            disabled={activeMobileIndex === achievements.length - 1}
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-surface border border-border text-text hover:text-accent-text disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition shadow-sm active:scale-95"
+            aria-label="Next achievement"
+          >
+            <ChevronRight size={22} />
+          </button>
         </div>
       </div>
       

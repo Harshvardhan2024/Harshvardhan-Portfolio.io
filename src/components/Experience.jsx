@@ -91,96 +91,56 @@ const RoleCard = ({ exp }) => {
   );
 };
 
-const Experience = () => {
-  const containerRef = useRef(null);
-  const cardRefs = useRef([]);
-  const [activeCards, setActiveCards] = useState(new Set([content.experience[0]?.id]));
+const ExperienceItem = ({ exp }) => {
+  const itemRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Scroll progress for continuous line fill
+  // Scroll progress for THIS individual card as it scrolls through the viewport
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 65%", "end 75%"]
+    target: itemRef,
+    offset: ["start 85%", "end 35%"]
   });
-  
+
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  useEffect(() => {
-    const observers = [];
-    content.experience.forEach((exp, idx) => {
-      const el = cardRefs.current[idx];
-      if (!el) return;
+  return (
+    <div 
+      ref={itemRef} 
+      id={`role-${exp.id}`}
+      className="flex items-stretch gap-3.5 sm:gap-6 w-full box-border"
+    >
+      {/* Solid thin vertical line (about 3px, rounded ends) spanning full card height */}
+      <div 
+        className="w-[3px] rounded-full bg-border/40 relative overflow-hidden flex-shrink-0 self-stretch my-1" 
+        aria-hidden="true"
+      >
+        <motion.div 
+          className="w-full h-full bg-accent origin-top rounded-full shadow-[0_0_8px_rgba(154,98,18,0.4)]"
+          style={{ 
+            scaleY: shouldReduceMotion ? 1 : scaleY 
+          }}
+        />
+      </div>
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveCards((prev) => new Set([...prev, exp.id]));
-          }
-        },
-        { threshold: 0.25, rootMargin: "-10% 0px -15% 0px" }
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
+      {/* Experience Card */}
+      <div className="flex-1 min-w-0">
+        <RoleCard exp={exp} />
+      </div>
+    </div>
+  );
+};
 
-    return () => observers.forEach((obs) => obs.disconnect());
-  }, []);
-
+const Experience = () => {
   return (
     <section id="experience" className="py-24 bg-bg text-text transition-colors duration-300 overflow-x-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full box-border">
         <h2 className="section-title">Experience</h2>
         
-        {/* Continuous Timeline Container */}
-        <div 
-          ref={containerRef} 
-          className="relative pl-7 sm:pl-10 lg:pl-12 w-full box-border"
-        >
-          {/* Continuous Unfilled Track Line (Spans through ALL cards from top to bottom) */}
-          <div 
-            className="absolute left-[7px] sm:left-[11px] lg:left-[15px] top-6 bottom-8 w-[2px] bg-border rounded-full pointer-events-none" 
-            aria-hidden="true"
-          />
-
-          {/* Continuous Scroll-Progress Fill Line (Grows in gold as user scrolls) */}
-          <motion.div 
-            className="absolute left-[7px] sm:left-[11px] lg:left-[15px] top-6 w-[2px] bg-accent origin-top rounded-full shadow-[0_0_8px_rgba(154,98,18,0.5)] pointer-events-none" 
-            style={{ 
-              scaleY: shouldReduceMotion ? 1 : scaleY, 
-              height: 'calc(100% - 3.5rem)' 
-            }} 
-            aria-hidden="true"
-          />
-
-          {/* Cards with Node Dots */}
-          <div className="flex flex-col gap-12 sm:gap-16 w-full box-border">
-            {content.experience.map((exp, idx) => {
-              const isLit = activeCards.has(exp.id);
-
-              return (
-                <div 
-                  key={exp.id} 
-                  id={`role-${exp.id}`}
-                  ref={(el) => (cardRefs.current[idx] = el)}
-                  className="relative w-full box-border"
-                >
-                  {/* Timeline Node Dot - positioned at the top of each card */}
-                  <div 
-                    className={`absolute -left-[27px] sm:-left-[35px] lg:-left-[41px] top-6 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition-all duration-300 z-10 ${
-                      isLit 
-                        ? 'bg-accent border-accent shadow-[0_0_12px_rgba(154,98,18,0.7)] scale-110' 
-                        : 'bg-bg border-border'
-                    }`}
-                    aria-hidden="true"
-                  />
-
-                  {/* Role Card */}
-                  <RoleCard exp={exp} />
-                </div>
-              );
-            })}
-          </div>
-
+        {/* Experience List with individual 3px side guide lines */}
+        <div className="flex flex-col gap-10 sm:gap-14 w-full box-border">
+          {content.experience.map((exp) => (
+            <ExperienceItem key={exp.id} exp={exp} />
+          ))}
         </div>
       </div>
     </section>
