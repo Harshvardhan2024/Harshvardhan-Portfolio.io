@@ -48,7 +48,7 @@ export const content = {
       title: 'Project Alpha',
       description: 'A revolutionary system for optimizing workflows and data analysis.',
       role: 'Lead Developer',
-      link: '',
+      link: 'https://docs.google.com/document/d/1F9W62g2p3VCbt223OXnecWHFAz_QhEboa2YBSMs60vo/edit?usp=drive_link',
       tags: ['React', 'Node.js', 'Python'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
