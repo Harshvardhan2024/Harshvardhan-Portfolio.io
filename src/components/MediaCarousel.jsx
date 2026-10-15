@@ -4,6 +4,28 @@ import { Play, Pause, Volume2, VolumeX, Maximize2, ChevronLeft, ChevronRight } f
 import { useInView } from 'react-intersection-observer';
 import clsx from 'clsx';
 
+/**
+ * Extract a YouTube video ID from a youtu.be/ID or youtube.com/watch?v=ID URL.
+ * Returns null if the URL is not a recognised YouTube URL.
+ */
+function getYouTubeId(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    // youtu.be/<id>
+    if (u.hostname === 'youtu.be') {
+      return u.pathname.slice(1).split('/')[0] || null;
+    }
+    // youtube.com/watch?v=<id>  or  www.youtube.com/...
+    if (u.hostname.endsWith('youtube.com')) {
+      return u.searchParams.get('v') || null;
+    }
+  } catch (_) {
+    // not a valid URL at all
+  }
+  return null;
+}
+
 export default function MediaCarousel({ media, className = '', isCardHovered = false }) {
   const shouldReduceMotion = useReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,6 +42,30 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
 
   const currentMedia = media[currentIndex] || {};
   const isPaused = isHovered || isCardHovered;
+
+  // For 'link' slides: resolve thumbnail src and YouTube hqdefault fallback
+  const _ytId = currentMedia.type === 'link' && !currentMedia.src
+    ? getYouTubeId(currentMedia.href)
+    : null;
+  const linkThumbSrc = currentMedia.type === 'link'
+    ? (currentMedia.src || (_ytId ? `https://img.youtube.com/vi/${_ytId}/maxresdefault.jpg` : null))
+    : null;
+  const linkHqSrc = _ytId ? `https://img.youtube.com/vi/${_ytId}/hqdefault.jpg` : null;
+
+  /**
+   * Three-tier thumbnail error handler for 'link' slides:
+   *   1st failure → swap to hqdefault  (only if it's a YouTube URL and not already hqdefault)
+   *   2nd failure → hide img, reveal the existing fallback box (nextSibling)
+   */
+  const handleLinkThumbError = (e) => {
+    const img = e.target;
+    if (linkHqSrc && img.src !== linkHqSrc) {
+      img.src = linkHqSrc;
+    } else {
+      img.style.display = 'none';
+      if (img.nextSibling) img.nextSibling.style.display = 'flex';
+    }
+  };
 
   // Auto-hide controls after 3 seconds on tap
   const showControlsTemporarily = () => {
@@ -167,13 +213,16 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
                 />
               ) : currentMedia.type === 'link' ? (
                 <div className="relative w-full h-full flex items-center justify-center bg-black">
-                  <img 
-                    src={currentMedia.src} 
-                    alt={currentMedia.label || "Video thumbnail"} 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
-                  />
-                  <div style={{ display: 'none' }} className="w-full h-full">
+                  {linkThumbSrc ? (
+                    <img
+                      src={linkThumbSrc}
+                      alt={currentMedia.label || "Video thumbnail"}
+                      className="w-full h-full object-cover"
+                      onError={handleLinkThumbError}
+                    />
+                  ) : null}
+                  {/* Fallback box: shown when all thumbnail attempts fail, or when no thumbSrc */}
+                  <div style={{ display: linkThumbSrc ? 'none' : 'flex' }} className="w-full h-full">
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gray-900 text-gray-300 p-4">
                       <a
                         href={currentMedia.href}
@@ -191,9 +240,9 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
                       </a>
                     </div>
                   </div>
-                  {/* Centered play button and label */}
+                  {/* Centered play button and label (overlaid on thumbnail) */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <a 
+                    <a
                       href={currentMedia.href}
                       target="_blank"
                       rel="noopener noreferrer"
