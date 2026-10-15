@@ -14,35 +14,23 @@ const AchievementCard = ({ item, isEnlarged = false, isDimmed = false }) => {
         isDimmed && "opacity-40"
       )}
     >
-      {/* Two Image Layers: Never crop images */}
+      {/* Single image layer — fills card with object-cover, no gaps */}
       {!imgFailed ? (
-        <>
-          {/* Layer 1: Blurred, enlarged, darkened copy as background (fills 16/10 card) */}
-          <img
-            src={item.image}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover scale-125 blur-md brightness-50 pointer-events-none"
-            aria-hidden="true"
-          />
-          {/* Layer 2: Real image on top with object-contain centered (never cropped) */}
-          <div className="absolute inset-0 pb-12 flex items-center justify-center p-2 z-[1]">
-            <img
-              src={item.image}
-              alt={item.title}
-              className="max-w-full max-h-full object-contain drop-shadow-md"
-              onError={() => setImgFailed(true)}
-            />
-          </div>
-        </>
+        <img
+          src={item.image}
+          alt={item.title}
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={() => setImgFailed(true)}
+        />
       ) : (
-        <div className="absolute inset-0 pb-12 flex flex-col items-center justify-center bg-surface-2 text-text-muted p-4 text-center z-[1]">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface-2 text-text-muted p-4 text-center">
           <span className="font-display font-bold text-accent-text text-sm mb-1">{item.title}</span>
           <span className="text-xs font-body">Achievement Image</span>
         </div>
       )}
 
-      {/* Bottom frosted-glass band */}
-      <div className="absolute bottom-0 inset-x-0 z-[2] px-3.5 py-2.5 sm:px-4 sm:py-3 bg-black/65 backdrop-blur-md border-t border-white/10 text-left">
+      {/* Bottom frosted-glass band — absolute, no margin, backdrop-blur */}
+      <div className="absolute bottom-0 left-0 right-0 z-[2] px-3.5 py-2.5 sm:px-4 sm:py-3 bg-black/40 backdrop-blur-md border-t border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] text-left">
         <h3 className="font-heading font-bold text-white text-sm sm:text-base truncate leading-snug block">
           {item.title}
         </h3>

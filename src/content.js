@@ -48,6 +48,7 @@ export const content = {
       title: 'Project Alpha',
       description: 'A revolutionary system for optimizing workflows and data analysis.',
       role: 'Lead Developer',
+      link: '',
       tags: ['React', 'Node.js', 'Python'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
@@ -61,6 +62,7 @@ export const content = {
       title: 'Project Beta',
       description: 'An innovative mobile application that connects communities.',
       role: 'Full Stack Engineer',
+      link: '',
       tags: ['React Native', 'Firebase', 'GraphQL'],
       media: [
         { type: 'image', src: asset('/assets/projects/p2-1.jpg') },
@@ -73,6 +75,7 @@ export const content = {
       title: 'Project Gamma',
       description: 'A machine learning model for predictive maintenance in IoT devices.',
       role: 'ML Engineer',
+      link: '',
       tags: ['Python', 'TensorFlow', 'AWS'],
       media: [
         { type: 'image', src: asset('/assets/projects/p3-1.jpg') },
@@ -85,6 +88,7 @@ export const content = {
       title: 'Project Delta',
       description: 'A secure, decentralized platform for digital identity verification.',
       role: 'Blockchain Developer',
+      link: '',
       tags: ['Solidity', 'Web3.js', 'React'],
       media: [
         { type: 'image', src: asset('/assets/projects/p4-1.jpg') },

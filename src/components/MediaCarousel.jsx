@@ -26,7 +26,7 @@ function getYouTubeId(url) {
   return null;
 }
 
-export default function MediaCarousel({ media, className = '', isCardHovered = false }) {
+export default function MediaCarousel({ media, className = '', isCardHovered = false, controlsVisible: controlsVisibleProp }) {
   const shouldReduceMotion = useReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -42,6 +42,10 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
 
   const currentMedia = media[currentIndex] || {};
   const isPaused = isHovered || isCardHovered;
+
+  // When parent passes controlsVisible (mobile card-tap driven), that overrides internal state.
+  // When parent doesn't pass it (undefined), fall back to own hover/tap state.
+  const effectiveControlsVisible = controlsVisibleProp !== undefined ? controlsVisibleProp : controlsVisible;
 
   // For 'link' slides: resolve thumbnail src and YouTube hqdefault fallback
   const _ytId = currentMedia.type === 'link' && !currentMedia.src
@@ -276,7 +280,7 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
       <div 
         className={clsx(
           "absolute inset-0 transition-opacity duration-200 z-20 pointer-events-none",
-          controlsVisible 
+          effectiveControlsVisible 
             ? "opacity-100" 
             : "opacity-0 sm:group-hover:opacity-100"
         )}

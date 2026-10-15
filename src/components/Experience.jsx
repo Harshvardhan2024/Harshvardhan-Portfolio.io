@@ -1,17 +1,22 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { content } from '../content';
 import MediaCarousel from './MediaCarousel';
 
-const RoleCard = ({ exp }) => {
+const RoleCard = ({ exp, controlsVisible, onCardTap }) => {
   return (
-    <div className="w-full max-w-full box-border bg-surface border border-border rounded-2xl overflow-hidden shadow-theme transition-all duration-300 hover:-translate-y-1 hover:border-accent will-change-transform">
-      {/* Slanted Media Frame - clipped safely to container width */}
+    <div
+      className="w-full max-w-full box-border bg-surface border border-border rounded-2xl overflow-hidden shadow-theme transition-all duration-300 hover:-translate-y-1 hover:border-accent will-change-transform"
+      onClick={onCardTap}
+    >
+      {/* Full-bleed media block — NO padding, NO slant-clip.
+          Card's overflow-hidden + rounded-2xl clips the top corners. */}
       {exp.media && exp.media.length > 0 && (
-        <div className="p-3 sm:p-5 pb-0 w-full overflow-hidden box-border">
-          <div className="rounded-xl overflow-hidden slant-clip w-full bg-black/40">
-            <MediaCarousel media={exp.media} />
-          </div>
+        <div className="w-full overflow-hidden">
+          <MediaCarousel
+            media={exp.media}
+            controlsVisible={controlsVisible}
+          />
         </div>
       )}
 
@@ -91,11 +96,10 @@ const RoleCard = ({ exp }) => {
   );
 };
 
-const ExperienceItem = ({ exp }) => {
+const ExperienceItem = ({ exp, controlsVisible, onCardTap }) => {
   const itemRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Scroll progress for THIS individual card as it scrolls through the viewport
   const { scrollYProgress } = useScroll({
     target: itemRef,
     offset: ["start 85%", "end 35%"]
@@ -109,37 +113,60 @@ const ExperienceItem = ({ exp }) => {
       id={`role-${exp.id}`}
       className="flex items-stretch gap-3.5 sm:gap-6 w-full box-border"
     >
-      {/* Solid thin vertical line (about 3px, rounded ends) spanning full card height */}
+      {/* Solid thin vertical line (3px) with gold scroll-fill */}
       <div 
         className="w-[3px] rounded-full bg-border/40 relative overflow-hidden flex-shrink-0 self-stretch my-1" 
         aria-hidden="true"
       >
         <motion.div 
           className="w-full h-full bg-accent origin-top rounded-full shadow-[0_0_8px_rgba(154,98,18,0.4)]"
-          style={{ 
-            scaleY: shouldReduceMotion ? 1 : scaleY 
-          }}
+          style={{ scaleY: shouldReduceMotion ? 1 : scaleY }}
         />
       </div>
 
       {/* Experience Card */}
       <div className="flex-1 min-w-0">
-        <RoleCard exp={exp} />
+        <RoleCard exp={exp} controlsVisible={controlsVisible} onCardTap={onCardTap} />
       </div>
     </div>
   );
 };
 
 const Experience = () => {
+  const [activeCardId, setActiveCardId] = useState(null);
+  const activeTimerRef = useRef(null);
+
+  // Activate a card for 3 s, then auto-hide controls
+  const activateCard = useCallback((id) => {
+    setActiveCardId(id);
+    if (activeTimerRef.current) clearTimeout(activeTimerRef.current);
+    activeTimerRef.current = setTimeout(() => setActiveCardId(null), 3000);
+  }, []);
+
+  useEffect(() => () => {
+    if (activeTimerRef.current) clearTimeout(activeTimerRef.current);
+  }, []);
+
+  // Called by each card's onClick. Only acts on touch devices; ignores taps on a/button.
+  const handleCardTap = useCallback((e, expId) => {
+    if (e.target.closest('a, button')) return;
+    if (!window.matchMedia('(hover: none)').matches) return;
+    activateCard(expId);
+  }, [activateCard]);
+
   return (
     <section id="experience" className="py-24 bg-bg text-text transition-colors duration-300 overflow-x-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full box-border">
         <h2 className="section-title">Experience</h2>
         
-        {/* Experience List with individual 3px side guide lines */}
         <div className="flex flex-col gap-10 sm:gap-14 w-full box-border">
           {content.experience.map((exp) => (
-            <ExperienceItem key={exp.id} exp={exp} />
+            <ExperienceItem
+              key={exp.id}
+              exp={exp}
+              controlsVisible={activeCardId === exp.id ? true : undefined}
+              onCardTap={(e) => handleCardTap(e, exp.id)}
+            />
           ))}
         </div>
       </div>
