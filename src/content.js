@@ -50,10 +50,11 @@ export const content = {
       role: 'Lead Developer',
       tags: ['React', 'Node.js', 'Python'],
       media: [
-        { type: 'image', src: asset('/assets/projects/p1-1.mp4') },
-        { type: 'video', src: asset('/assets/projects/p1-2.png') },
-        { type: 'image', src: asset('/assets/projects/p1-3.jpg') }
-      ]
+  { type: 'video', src: asset('/assets/projects/p1-1.mp4') },
+  { type: 'image', src: asset('/assets/projects/p1-2.png') },
+  { type: 'image', src: asset('/assets/projects/p1-3.jpg') },
+  { type: 'image', src: asset('/assets/projects/p1-4.jpg') }
+]
     },
     {
       id: 'p2',
