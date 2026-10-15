@@ -39,18 +39,17 @@ const Projects = () => {
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
                 onClick={(e) => handleCardTap(e, project.id)}
-                className="group relative bg-surface rounded-2xl border border-border transition-all duration-300 ease-out will-change-transform shadow-theme flex flex-col cursor-pointer hover:scale-[1.04] hover:border-accent hover:shadow-theme z-0 hover:z-10"
+                className="group relative bg-surface rounded-2xl overflow-hidden border border-border transition-all duration-300 ease-out will-change-transform shadow-theme flex flex-col cursor-pointer hover:scale-[1.04] hover:border-accent hover:shadow-theme z-0 hover:z-10"
               >
-                {/* Media Carousel Wrapper — shape unchanged (slant-clip kept for Projects) */}
-                <div className="p-4 pb-0 w-full overflow-hidden">
-                  <div className="rounded-xl overflow-hidden slant-clip w-full bg-black/40">
-                    <div className="transition-transform duration-300 ease-out will-change-transform group-hover:scale-[1.08]">
-                      <MediaCarousel
-                        media={project.media}
-                        isCardHovered={hoveredId === project.id}
-                        controlsVisible={activeCardId === project.id ? true : undefined}
-                      />
-                    </div>
+                {/* Full-bleed media — no padding, no slant-clip.
+                    Card's overflow-hidden + rounded-2xl clips the top corners. */}
+                <div className="w-full overflow-hidden">
+                  <div className="transition-transform duration-300 ease-out will-change-transform group-hover:scale-[1.08]">
+                    <MediaCarousel
+                      media={project.media}
+                      isCardHovered={hoveredId === project.id}
+                      controlsVisible={activeCardId === project.id ? true : undefined}
+                    />
                   </div>
                 </div>
                 
