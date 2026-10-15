@@ -165,7 +165,7 @@ export const content = {
   skills: {
     categories: ['All', 'Frontend', 'Backend', 'Tools', 'Soft Skills'],
     items: [
-      { name: 'React', category: 'Frontend', level: 'Advanced', icon: 'react' },
+      { name: 'Solidworks', category: 'CAD', level: 'Good', icon: 'Solidworks' },
       { name: 'JavaScript', category: 'Frontend', level: 'Advanced', icon: 'javascript' },
       { name: 'Node.js', category: 'Backend', level: 'Intermediate', icon: 'nodejs' },
       { name: 'Python', category: 'Backend', level: 'Advanced', icon: 'python' },
