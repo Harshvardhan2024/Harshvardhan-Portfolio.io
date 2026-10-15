@@ -29,13 +29,13 @@ export const content = {
     slides: [
       { headline: 'HARSHVARDHAN', headlineGold: 'PATIL', subtitle: 'Curiousity Driven Mind' },
       { headline: 'ENGINEERING', headlineGold: 'SOLUTIONS', subtitle: 'From Concepts to Flight' },
-      { headline: 'INTO THE', headlineGold: 'ORBIT', subtitle: 'Devoted to Building Systems that Fly' },
+      { headline: 'BEYOND THE', headlineGold: 'HORIZON', subtitle: 'Devoted to Building Systems that Fly' },
       { headline: 'AERONAUTICAL', headlineGold: 'ENGINEER', subtitle: 'Propulsion, Aerodynamics, CAD, FEA' }
     ]
   },
   about: {
     photo: asset('/assets/profile/profile.jpg'),
-    paragraph: 'I am a highly motivated engineering graduate with a strong foundation in software development, systems design, and problem-solving. My academic journey and hands-on projects have equipped me with the skills to tackle complex technical challenges. I thrive in collaborative environments and am always eager to learn new technologies and methodologies to deliver high-quality, impactful solutions.',
+    paragraph: 'I’m fascinated by the journey from an idea on a screen to a system that actually flies. I work at the intersection of design, simulation, and hands-on experimentation, exploring how things can be built differently, made smarter, and pushed further. From shaping UAV prototypes to exploring computational engineering, I’m drawn to challenges where curiosity meets real-world constraints. I don’t just want to understand how things work—I want to build, test, break, refine, and make them work better. Ultimately, I’m here to engineer systems that turn bold ideas into flight.',
     stats: [
       { label: 'Projects Completed', value: '10+' },
       { label: 'Hackathons Won', value: '3' },
