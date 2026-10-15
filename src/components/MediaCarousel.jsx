@@ -212,53 +212,53 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
                   onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
                 />
               ) : currentMedia.type === 'link' ? (
-                <div className="relative w-full h-full flex items-center justify-center bg-black">
+                /* 
+                  The entire link slide is ONE <a> so clicking/tapping anywhere 
+                  on the thumbnail opens the video. The play icon is purely visual.
+                  z-10 puts it above the image layer but below the z-20 controls.
+                  handleMediaTap's guard (closest 'button,a') lets this click through.
+                */
+                <a
+                  href={currentMedia.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative w-full h-full flex items-center justify-center bg-black cursor-pointer z-10 block"
+                  aria-label={currentMedia.label || 'Watch video'}
+                  style={{ display: 'block' }}
+                >
                   {linkThumbSrc ? (
                     <img
                       src={linkThumbSrc}
                       alt={currentMedia.label || "Video thumbnail"}
-                      className="w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
                       onError={handleLinkThumbError}
                     />
                   ) : null}
                   {/* Fallback box: shown when all thumbnail attempts fail, or when no thumbSrc */}
-                  <div style={{ display: linkThumbSrc ? 'none' : 'flex' }} className="w-full h-full">
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gray-900 text-gray-300 p-4">
-                      <a
-                        href={currentMedia.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex flex-col items-center gap-2 group/play pointer-events-auto"
-                      >
-                        <div className="w-14 h-14 rounded-full bg-accent/90 group-hover/play:bg-accent text-on-accent flex items-center justify-center shadow-lg transition-transform group-hover/play:scale-110">
-                          <Play size={24} className="fill-current ml-1" />
-                        </div>
-                        <span className="text-xs font-heading font-medium tracking-wide text-white/90 group-hover/play:text-accent-text transition-colors">
-                          {currentMedia.label || 'Watch video'}
-                        </span>
-                      </a>
+                  <div
+                    style={{ display: linkThumbSrc ? 'none' : 'flex' }}
+                    className="absolute inset-0 w-full h-full flex-col items-center justify-center bg-gray-900 text-gray-300 p-4"
+                  >
+                    <div className="w-14 h-14 rounded-full bg-accent/90 text-on-accent flex items-center justify-center shadow-lg">
+                      <Play size={24} className="fill-current ml-1" />
                     </div>
+                    <span className="mt-2 text-xs font-heading font-medium tracking-wide text-white/90">
+                      {currentMedia.label || 'Watch video'}
+                    </span>
                   </div>
-                  {/* Centered play button and label (overlaid on thumbnail) */}
+                  {/* Centered play button overlay (visual only — the <a> handles navigation) */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <a
-                      href={currentMedia.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex flex-col items-center gap-2 group/play pointer-events-auto p-4 cursor-pointer"
-                      aria-label={currentMedia.label || 'Watch video'}
-                    >
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/60 group-hover/play:bg-accent text-white group-hover/play:text-on-accent border border-white/40 group-hover/play:border-accent flex items-center justify-center shadow-2xl backdrop-blur-sm transition-all group-hover/play:scale-110">
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/60 hover:bg-accent text-white border border-white/40 hover:border-accent flex items-center justify-center shadow-2xl backdrop-blur-sm transition-all">
                         <Play size={26} className="fill-current ml-1" />
                       </div>
-                      <span className="text-xs sm:text-sm font-heading font-medium tracking-wide text-white drop-shadow-md bg-black/50 px-3 py-1 rounded-full border border-white/20 group-hover/play:border-accent transition-colors">
+                      <span className="text-xs sm:text-sm font-heading font-medium tracking-wide text-white drop-shadow-md bg-black/50 px-3 py-1 rounded-full border border-white/20 transition-colors">
                         {currentMedia.label || 'Watch video'}
                       </span>
-                    </a>
+                    </div>
                   </div>
-                </div>
+                </a>
               ) : <ErrorFallback />}
               <div style={{display: 'none'}} className="w-full h-full"><ErrorFallback /></div>
             </motion.div>
@@ -268,16 +268,17 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
 
       {/* 
         CONTROLS WRAPPER (Arrows, expand, pause and mute buttons):
-        - Hidden on touch by default (opacity-0, pointer-events-none)
-        - Shows on tap with 200ms transition, auto-hiding after 3s
-        - Shows on desktop hover (@media hover: hover / sm:group-hover)
+        - The wrapper itself is ALWAYS pointer-events-none so it never blocks
+          clicks on slide content (images, the link-slide <a>, etc.) below it.
+        - Each individual button inside has pointer-events-auto so it still works.
+        - Visibility (opacity) is controlled by controlsVisible state + desktop hover.
       */}
       <div 
         className={clsx(
-          "absolute inset-0 transition-opacity duration-200 z-20",
+          "absolute inset-0 transition-opacity duration-200 z-20 pointer-events-none",
           controlsVisible 
-            ? "opacity-100 pointer-events-auto" 
-            : "opacity-0 pointer-events-none sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto"
+            ? "opacity-100" 
+            : "opacity-0 sm:group-hover:opacity-100"
         )}
       >
         {/* Top-right controls: expand, and (only for video) pause & mute */}
@@ -302,7 +303,7 @@ export default function MediaCarousel({ media, className = '', isCardHovered = f
           )}
           <button 
             onClick={handleControlAction(toggleFullscreen)} 
-            className="w-9 h-9 min-w-[36px] min-h-[36px] bg-black/60 rounded-full text-gold border border-gold/40 hover:bg-gold hover:text-dark transition flex items-center justify-center active:scale-95" 
+            className="w-9 h-9 min-w-[36px] min-h-[36px] bg-black/60 rounded-full text-gold border border-gold/40 hover:bg-gold hover:text-dark transition flex items-center justify-center active:scale-95 pointer-events-auto" 
             aria-label="Expand media"
           >
             <Maximize2 size={16} />
