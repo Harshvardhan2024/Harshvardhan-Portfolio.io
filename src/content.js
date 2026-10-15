@@ -37,9 +37,9 @@ export const content = {
     photo: asset('/assets/profile/profile.jpg'),
     paragraph: 'I’m fascinated by the journey from an idea on a screen to a system that actually flies. I work at the intersection of design, simulation, and hands-on experimentation, exploring how things can be built differently, made smarter, and pushed further. From shaping UAV prototypes to exploring computational engineering, I’m drawn to challenges where curiosity meets real-world constraints. I don’t just want to understand how things work—I want to build, test, break, refine, and make them work better. Ultimately, I’m here to engineer systems that turn bold ideas into flight.',
     stats: [
-      { label: 'Projects Completed', value: '10+' },
-      { label: 'Hackathons Won', value: '3' },
-      { label: 'Lines of Code', value: '100k+' }
+      { label: 'Experience', value: '1+ years' },
+      { label: 'National level Competitions', value: '5x' },
+      { label: 'Engineering Interests', value: 'SR-71 & LOX' }
     ]
   },
   projects: [
