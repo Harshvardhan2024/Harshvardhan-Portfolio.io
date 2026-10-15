@@ -67,6 +67,10 @@
     font-family: 'Outfit', sans-serif;
     color: var(--text);
   }
+
+  #about, #projects, #experience, #skills, #achievements, #education, #contact {
+    scroll-margin-top: 96px;
+  }
 }
 
 @layer components {

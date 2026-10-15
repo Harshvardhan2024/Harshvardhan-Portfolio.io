@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Moon, Sun, Download } from 'lucide-react';
+import { Menu, X, Moon, Sun, Download, Mail } from 'lucide-react';
 import { content } from '../content';
 
 const Navbar = ({ toggleTheme, isDark }) => {
@@ -82,7 +82,8 @@ const Navbar = ({ toggleTheme, isDark }) => {
     <>
       {/* 
         Fixed Navigation Wrapper:
-        Coordinates edge-to-edge hero bar and centered floating pill with silky-smooth cubic-bezier transition
+        - Hero state: edge-to-edge frosted glass bar
+        - Scrolled state: centered dark brown pill (#2A2519) on both phones and desktop in light & dark mode
       */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
@@ -92,11 +93,11 @@ const Navbar = ({ toggleTheme, isDark }) => {
         <div
           className={`w-full flex justify-between items-center pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[max-width,border-radius,background-color,box-shadow,transform,padding,margin] ${
             isHeroInView
-              ? 'max-w-full rounded-none bg-surface/85 dark:bg-slate-950/50 backdrop-blur-md border-b border-border/60 dark:border-white/10 shadow-none px-4 sm:px-8 py-3.5 sm:py-4 mt-0'
-              : 'max-w-5xl rounded-full bg-surface dark:bg-slate-900 backdrop-blur-none border border-border dark:border-slate-800 shadow-2xl px-4 sm:px-6 py-2.5 sm:py-3 mt-3 sm:mt-4'
+              ? 'max-w-full rounded-none bg-surface/85 dark:bg-slate-950/50 backdrop-blur-md border-b border-border/60 dark:border-white/10 shadow-none px-3.5 sm:px-8 py-3.5 sm:py-4 mt-0'
+              : 'max-w-5xl rounded-full bg-[#2A2519] text-[#F5EBD6] backdrop-blur-none border border-[#3E3827] shadow-2xl px-3.5 sm:px-6 py-2 sm:py-3 mt-3 sm:mt-4'
           }`}
         >
-          {/* BRANDING: Stylized "HP" box + full name */}
+          {/* BRANDING: HP badge + "H. Patil" on phone, full name on desktop */}
           <a
             href="#"
             className="flex items-center gap-2 sm:gap-2.5 group flex-shrink-0 min-w-0"
@@ -105,41 +106,77 @@ const Navbar = ({ toggleTheme, isDark }) => {
             <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent/20 border border-accent/40 text-accent-text flex items-center justify-center text-xs sm:text-sm font-bold font-display shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
               {brandMark}
             </span>
-            <span className="text-sm sm:text-base font-heading font-bold text-text tracking-wide group-hover:text-accent-text transition-colors truncate max-w-[130px] sm:max-w-none">
+            {/* Phone under 640px: clean "H. Patil" */}
+            <span className={`font-heading font-bold text-sm sm:hidden whitespace-nowrap ${isHeroInView ? 'text-text dark:text-[#F5EBD6]' : 'text-[#F5EBD6]'}`}>
+              H. Patil
+            </span>
+            {/* Desktop & Tablet: full name */}
+            <span className={`font-heading font-bold text-sm sm:text-base tracking-wide hidden sm:inline truncate group-hover:text-accent-text transition-colors ${isHeroInView ? 'text-text dark:text-[#F5EBD6]' : 'text-[#F5EBD6]'}`}>
               {fullName}
             </span>
           </a>
 
-          {/* VISIBLE RIGHT-SIDE CONTROLS (Only Theme Toggle, Resume, 3-Bar Menu) */}
-          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+          {/* RIGHT-SIDE CONTROLS: fits 360px without overflow */}
+          <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
             {/* Theme Mode Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="p-1.5 sm:p-2 rounded-full text-text hover:text-accent-text hover:bg-surface-2/70 transition-colors flex-shrink-0"
+              className={`p-1.5 sm:p-2 rounded-full transition-colors flex-shrink-0 ${
+                isHeroInView
+                  ? 'text-text dark:text-[#F5EBD6] hover:bg-surface-2/70'
+                  : 'text-[#F5EBD6] hover:bg-white/10'
+              }`}
               aria-label="Toggle Theme"
             >
-              {isDark ? <Sun size={18} className="sm:w-5 sm:h-5" /> : <Moon size={18} className="sm:w-5 sm:h-5" />}
+              {isDark ? <Sun size={17} className="sm:w-5 sm:h-5" /> : <Moon size={17} className="sm:w-5 sm:h-5" />}
             </button>
 
-            {/* Resume Button */}
+            {/* Mobile Contact Button (Mail icon, under 640px) */}
+            <a
+              href="#contact"
+              aria-label="Contact"
+              className={`sm:hidden p-1.5 rounded-full transition-colors flex items-center justify-center flex-shrink-0 ${
+                isHeroInView
+                  ? 'text-text dark:text-[#F5EBD6] hover:bg-surface-2/70'
+                  : 'text-[#F5EBD6] hover:bg-white/10'
+              }`}
+            >
+              <Mail size={17} />
+            </a>
+
+            {/* Mobile Resume Button (Download icon, under 640px) */}
             <a
               href={content.personal.resumeUrl}
               download
-              className="btn-gold text-xs sm:text-sm py-1.5 px-3 sm:px-4 shadow-sm flex items-center gap-1.5 flex-shrink-0"
+              aria-label="Resume"
+              className="sm:hidden w-7 h-7 rounded-full bg-accent hover:bg-accent-hover text-on-accent shadow-sm flex items-center justify-center flex-shrink-0 transition-transform active:scale-95"
+            >
+              <Download size={14} />
+            </a>
+
+            {/* Desktop Resume Button (with label, >= 640px) */}
+            <a
+              href={content.personal.resumeUrl}
+              download
+              className="btn-gold text-xs sm:text-sm py-1.5 px-3 sm:px-4 shadow-sm hidden sm:flex items-center gap-1.5 flex-shrink-0"
               aria-label="Resume"
             >
               <Download size={13} className="sm:w-4 sm:h-4" />
               <span>Resume</span>
             </a>
 
-            {/* 3-Bar Hamburger Menu Icon (Always visible on right) */}
+            {/* 3-Bar Hamburger Menu Icon */}
             <button
               onClick={toggleMenu}
-              className="p-1.5 sm:p-2 rounded-full text-text hover:text-accent-text hover:bg-surface-2/70 transition-colors flex items-center justify-center flex-shrink-0 ml-0.5"
+              className={`p-1.5 sm:p-2 rounded-full transition-colors flex items-center justify-center flex-shrink-0 ml-0.5 ${
+                isHeroInView
+                  ? 'text-text dark:text-[#F5EBD6] hover:bg-surface-2/70'
+                  : 'text-[#F5EBD6] hover:bg-white/10'
+              }`}
               aria-label="Toggle Menu"
               aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+              {isMenuOpen ? <X size={20} className="sm:w-[22px] sm:h-[22px]" /> : <Menu size={20} className="sm:w-[22px] sm:h-[22px]" />}
             </button>
           </div>
         </div>

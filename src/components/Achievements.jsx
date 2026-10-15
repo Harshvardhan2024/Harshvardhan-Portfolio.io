@@ -3,6 +3,57 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
 import { content } from '../content';
 
+const AchievementCard = ({ item, isEnlarged = false, isDimmed = false }) => {
+  const [imgFailed, setImgFailed] = useState(false);
+
+  return (
+    <div
+      className={clsx(
+        "relative w-full h-full rounded-2xl overflow-hidden border border-border/70 bg-surface shadow-md transition-all duration-300 ease-out origin-center select-none",
+        isEnlarged && "scale-[1.35] z-30 ring-2 ring-accent shadow-2xl",
+        isDimmed && "opacity-40"
+      )}
+    >
+      {/* Two Image Layers: Never crop images */}
+      {!imgFailed ? (
+        <>
+          {/* Layer 1: Blurred, enlarged, darkened copy as background (fills 16/10 card) */}
+          <img
+            src={item.image}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover scale-125 blur-md brightness-50 pointer-events-none"
+            aria-hidden="true"
+          />
+          {/* Layer 2: Real image on top with object-contain centered (never cropped) */}
+          <div className="absolute inset-0 pb-12 flex items-center justify-center p-2 z-[1]">
+            <img
+              src={item.image}
+              alt={item.title}
+              className="max-w-full max-h-full object-contain drop-shadow-md"
+              onError={() => setImgFailed(true)}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="absolute inset-0 pb-12 flex flex-col items-center justify-center bg-surface-2 text-text-muted p-4 text-center z-[1]">
+          <span className="font-display font-bold text-accent-text text-sm mb-1">{item.title}</span>
+          <span className="text-xs font-body">Achievement Image</span>
+        </div>
+      )}
+
+      {/* Bottom frosted-glass band */}
+      <div className="absolute bottom-0 inset-x-0 z-[2] px-3.5 py-2.5 sm:px-4 sm:py-3 bg-black/65 backdrop-blur-md border-t border-white/10 text-left">
+        <h3 className="font-heading font-bold text-white text-sm sm:text-base truncate leading-snug block">
+          {item.title}
+        </h3>
+        <p className="font-body text-xs sm:text-sm text-white/80 truncate leading-snug block mt-0.5">
+          {item.description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const Achievements = () => {
   const [hoveredId, setHoveredId] = useState(null);
   const [activeMobileIndex, setActiveMobileIndex] = useState(0);
@@ -63,22 +114,25 @@ const Achievements = () => {
   const nextMobile = () => scrollToMobileIndex(activeMobileIndex + 1);
 
   return (
-    <section id="achievements" className="py-24 bg-bg text-text overflow-hidden transition-colors duration-300">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-12">
+    <section id="achievements" className="py-16 sm:py-20 bg-bg text-text overflow-hidden transition-colors duration-300">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-8 sm:mb-10">
         <h2 className="section-title">Achievements</h2>
       </div>
 
       {/* ========================================================
-          DESKTOP: CONTINUOUS SLANTED-PANEL MARQUEE RAIL
+          DESKTOP: CONTINUOUS AUTO-SCROLLING RAIL (768px and up)
+          - Fixed-size slots (360px x 225px, 16/10 aspect ratio)
+          - In-place hover scale: 1.35 without affecting layout
+          - Pauses smoothly with animationPlayState: paused (no jump)
+          - Compact height (340px) with overflow-visible so cards never clip
           ======================================================== */}
-      <div className="hidden md:flex relative w-full h-[460px] items-center overflow-visible">
+      <div className="hidden md:flex relative w-full h-[340px] items-center overflow-visible">
         <div 
-          className={`flex gap-6 absolute left-0 will-change-transform no-scrollbar py-8 ${
-            hoveredId !== null ? 'animate-none' : ''
-          }`}
+          className="flex gap-6 absolute left-0 will-change-transform no-scrollbar py-6"
           style={{ 
             width: 'max-content', 
-            animation: hoveredId !== null ? 'none' : 'achievementRail 45s linear infinite' 
+            animation: 'achievementRail 45s linear infinite',
+            animationPlayState: hoveredId !== null ? 'paused' : 'running'
           }}
         >
           {desktopRailItems.map((item, idx) => {
@@ -91,50 +145,13 @@ const Achievements = () => {
                 key={uniqueId}
                 onMouseEnter={() => setHoveredId(uniqueId)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={`relative h-[340px] w-[260px] transition-all duration-300 ease-out cursor-pointer origin-center flex-shrink-0 ${
-                  isHovered 
-                    ? 'scale-[1.3] z-30 mx-8 shadow-theme ring-2 ring-accent' 
-                    : isAnyHovered 
-                      ? 'opacity-40 scale-95 z-10' 
-                      : 'hover:scale-105 z-10'
-                }`}
-                style={{
-                  clipPath: 'polygon(15% 0, 100% 0, 85% 100%, 0% 100%)'
-                }}
+                className="w-[360px] h-[225px] flex-shrink-0 relative flex items-center justify-center cursor-pointer"
               >
-                {/* Image Background */}
-                <div className="absolute inset-0 w-full h-full bg-surface">
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="w-full h-full object-cover scale-125"
-                    onError={(e) => { 
-                      e.target.style.display = 'none'; 
-                      e.target.nextSibling.style.display = 'flex'; 
-                    }}
-                  />
-                  <div style={{ display: 'none' }} className="w-full h-full bg-surface-2 items-center justify-center">
-                    <span className="text-text-muted font-display text-xs">IMG</span>
-                  </div>
-                </div>
-
-                {/* Embedded Description Overlay inside slanted panel */}
-                <div className={`absolute inset-0 flex flex-col justify-end p-5 pb-7 transition-all duration-300 ${
-                  isHovered 
-                    ? 'bg-gradient-to-t from-black/95 via-black/75 to-transparent' 
-                    : 'bg-gradient-to-t from-black/85 via-black/50 to-transparent'
-                }`}>
-                  <div className="transform skew-x-12 ml-3">
-                    <h3 className="text-accent-text font-display font-bold text-lg leading-tight mb-1">
-                      {item.title}
-                    </h3>
-                    <p className={`text-[#FFF8E7] text-xs font-body transition-all duration-300 leading-snug ${
-                      isHovered ? 'opacity-100 max-h-24 mt-1.5' : 'opacity-85 line-clamp-2'
-                    }`}>
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
+                <AchievementCard 
+                  item={item}
+                  isEnlarged={isHovered}
+                  isDimmed={!isHovered && isAnyHovered}
+                />
               </div>
             );
           })}
@@ -142,13 +159,17 @@ const Achievements = () => {
       </div>
 
       {/* ========================================================
-          MOBILE: CAROUSEL-BASED SLIDER WITH PEEKING CARDS
+          MOBILE: CAROUSEL-BASED SLIDER WITH PEEKING CARDS (< 768px)
+          - Fixed-size cards (280px x 175px, 16/10 aspect ratio)
+          - Centered card slightly enlarged in place (scale 1.08)
+          - Snap-scrolling with neighbors peeking
+          - Left/Right 44px tap target arrow buttons and pagination dots
           ======================================================== */}
-      <div className="md:hidden relative w-full overflow-hidden py-4">
+      <div className="md:hidden relative w-full overflow-hidden py-2">
         {/* Swipable Carousel with Scroll-Snap */}
         <div
           ref={mobileContainerRef}
-          className="flex overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory gap-4 px-[calc(50vw-120px)] py-6 items-center"
+          className="flex overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory gap-4 px-[calc(50vw-140px)] py-5 items-center"
           style={{
             WebkitOverflowScrolling: 'touch'
           }}
@@ -162,51 +183,23 @@ const Achievements = () => {
                 id={`mobile-${item.id}`}
                 ref={(el) => (cardRefs.current[idx] = el)}
                 onClick={() => scrollToMobileIndex(idx)}
-                className={`snap-center relative h-[320px] w-[240px] flex-shrink-0 transition-all duration-300 ease-out cursor-pointer origin-center ${
-                  isCentered 
-                    ? 'scale-[1.08] z-20 shadow-theme ring-2 ring-accent opacity-100' 
-                    : 'scale-[0.92] opacity-60 z-10'
-                }`}
-                style={{
-                  clipPath: 'polygon(15% 0, 100% 0, 85% 100%, 0% 100%)'
-                }}
+                className={clsx(
+                  "snap-center relative h-[175px] w-[280px] flex-shrink-0 transition-transform duration-300 ease-out cursor-pointer origin-center rounded-2xl overflow-hidden",
+                  isCentered ? "scale-[1.08] z-20" : "scale-[0.95] z-10"
+                )}
               >
-                {/* Image Background */}
-                <div className="absolute inset-0 w-full h-full bg-surface">
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="w-full h-full object-cover scale-125"
-                    onError={(e) => { 
-                      e.target.style.display = 'none'; 
-                      e.target.nextSibling.style.display = 'flex'; 
-                    }}
-                  />
-                  <div style={{ display: 'none' }} className="w-full h-full bg-surface-2 items-center justify-center">
-                    <span className="text-text-muted font-display text-xs">IMG</span>
-                  </div>
-                </div>
-
-                {/* Embedded description overlay */}
-                <div className="absolute inset-0 flex flex-col justify-end p-5 pb-7 bg-gradient-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-300">
-                  <div className="transform skew-x-12 ml-2">
-                    <h3 className="text-accent-text font-display font-bold text-base leading-tight mb-1">
-                      {item.title}
-                    </h3>
-                    <p className={`text-[#FFF8E7] text-xs font-body leading-snug transition-all duration-300 ${
-                      isCentered ? 'opacity-100 max-h-20' : 'opacity-85 line-clamp-2'
-                    }`}>
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
+                <AchievementCard 
+                  item={item}
+                  isEnlarged={false}
+                  isDimmed={!isCentered}
+                />
               </div>
             );
           })}
         </div>
 
         {/* Mobile Navigation Controls: Arrows and Dots */}
-        <div className="flex items-center justify-between px-6 mt-3 max-w-sm mx-auto">
+        <div className="flex items-center justify-between px-6 mt-2 max-w-sm mx-auto">
           {/* Left Arrow Button (44px min tap target) */}
           <button
             onClick={prevMobile}
