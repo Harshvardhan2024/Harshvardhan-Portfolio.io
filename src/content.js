@@ -50,7 +50,7 @@ export const content = {
       role: 'Lead Developer',
       tags: ['React', 'Node.js', 'Python'],
       media: [
-        { type: 'link', src: asset('/assets/projects/p1-video-thumb.jpg'), href: 'PASTE_LINK_HERE', label: 'Watch video' },
+        { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
         { type: 'image', src: asset('/assets/projects/p1-2.png') },
         { type: 'image', src: asset('/assets/projects/p1-3.jpg') },
         { type: 'image', src: asset('/assets/projects/p1-4.jpg') }
