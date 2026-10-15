@@ -67,7 +67,7 @@ const Projects = () => {
                     {project.description}
                   </p>
                   
-                  {/* Single "Link" pill tag — only rendered when project.link is non-empty */}
+                  {/* Link pill — always visible; becomes a real link once project.link is filled */}
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {project.link ? (
                       <a
@@ -79,7 +79,11 @@ const Projects = () => {
                       >
                         Link
                       </a>
-                    ) : null}
+                    ) : (
+                      <span className="text-xs font-body px-3 py-1 bg-surface-2 text-text-muted rounded-md border border-border opacity-50 cursor-default select-none">
+                        Link
+                      </span>
+                    )}
                   </div>
                 </div>
               </article>
