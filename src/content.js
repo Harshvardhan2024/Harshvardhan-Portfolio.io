@@ -66,7 +66,7 @@ export const content = {
       tags: ['React Native', 'Firebase', 'GraphQL'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
-        { type: 'image', src: asset('/assets/projects/p2-1.jpg') },
+        { type: 'image', src: asset('/assets/projects/p2-1.jpeg') },
         { type: 'image', src: asset('/assets/projects/p2-2.jpg') }
       ]
     },
@@ -78,9 +78,9 @@ export const content = {
       link: '',
       tags: ['Python', 'TensorFlow', 'AWS'],
       media: [
-        { type: 'image', src: asset('/assets/projects/p3-1.jpg') },
+        { type: 'image', src: asset('/assets/projects/p3-1.png') },
         { type: 'link', src: 'https://img.youtube.com/vi/DuspNCTkFSs/maxresdefault.jpg', href: 'https://youtu.be/DuspNCTkFSs', label: 'Watch video' },
-        { type: 'image', src: asset('/assets/projects/p3-2.jpg') }
+        { type: 'image', src: asset('/assets/projects/p3-2.png') }
       ]
     },
     {
