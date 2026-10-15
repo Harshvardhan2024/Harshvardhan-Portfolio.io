@@ -45,13 +45,13 @@ export const content = {
   projects: [
     {
       id: 'p1',
-      title: 'Project Alpha',
-      description: 'A revolutionary system for optimizing workflows and data analysis.',
-      role: 'Lead Developer',
+      title: 'Alteria - VTOL UAV',
+      description: 'Alteria is an autonomous Tiltrotor VTOL UAV developed for reconnaissance and intelligent aerial operations. The project focuses on lightweight manufacturing, rapid prototyping, and reliable autonomous flight systems.',
+      role: 'Structural Design and Mission Integration',
       link: 'https://docs.google.com/document/d/1F9W62g2p3VCbt223OXnecWHFAz_QhEboa2YBSMs60vo/edit?usp=drive_link',
       tags: ['React', 'Node.js', 'Python'],
       media: [
-        { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
+        { type: 'link', src: 'https://img.youtube.com/vi/ISmoAcUX9rk/maxresdefault.jpg', href: 'https://youtu.be/ISmoAcUX9rk', label: 'Watch video' },
         { type: 'image', src: asset('/assets/projects/p1-2.png') },
         { type: 'image', src: asset('/assets/projects/p1-3.jpg') },
         { type: 'image', src: asset('/assets/projects/p1-4.jpg') }
@@ -66,7 +66,7 @@ export const content = {
       tags: ['React Native', 'Firebase', 'GraphQL'],
       media: [
         { type: 'image', src: asset('/assets/projects/p2-1.jpg') },
-        { type: 'video', src: asset('/assets/projects/p2-vid.mp4') },
+        { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
         { type: 'image', src: asset('/assets/projects/p2-2.jpg') }
       ]
     },
