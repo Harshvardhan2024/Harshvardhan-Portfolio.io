@@ -52,9 +52,7 @@ export const content = {
       tags: ['React', 'Node.js', 'Python'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/ISmoAcUX9rk/maxresdefault.jpg', href: 'https://youtu.be/ISmoAcUX9rk', label: 'Watch video' },
-        { type: 'image', src: asset('/assets/projects/p1-2.png') },
-        { type: 'image', src: asset('/assets/projects/p1-3.jpg') },
-        { type: 'image', src: asset('/assets/projects/p1-4.jpg') }
+        { type: 'image', src: asset('/assets/projects/p1-2.png') }
       ]
     },
     {
@@ -66,8 +64,7 @@ export const content = {
       tags: ['React Native', 'Firebase', 'GraphQL'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/cDPbKQAXcKU/maxresdefault.jpg', href: 'https://youtu.be/cDPbKQAXcKU', label: 'Watch video' },
-        { type: 'image', src: asset('/assets/projects/p2-1.jpeg') },
-        { type: 'image', src: asset('/assets/projects/p2-2.jpg') }
+        { type: 'image', src: asset('/assets/projects/p2-1.jpeg') }
       ]
     },
     {
@@ -92,8 +89,7 @@ export const content = {
       tags: ['Solidity', 'Web3.js', 'React'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/zujK3HNhVKE/maxresdefault.jpg', href: 'https://youtu.be/zujK3HNhVKE', label: 'Watch video' } ,
-        { type: 'link', src: 'https://img.youtube.com/vi/7Ec9ldQz7Xs/maxresdefault.jpg', href: 'https://youtube.com/shorts/7Ec9ldQz7Xs', label: 'Watch video' } ,
-        { type: 'image', src: asset('/assets/projects/p4-2.jpg') }
+        { type: 'link', src: 'https://img.youtube.com/vi/7Ec9ldQz7Xs/maxresdefault.jpg', href: 'https://youtube.com/shorts/7Ec9ldQz7Xs', label: 'Watch video' }
       ]
     }
   ],
@@ -157,7 +153,6 @@ export const content = {
       metrics: [{ value: '2', label: 'Technical Events Organized', link: 'https://www.instagram.com/asme_git/?hl=en' }],
       media: [
         { type: 'image', src: asset('/assets/experience/e3-1.jpeg') },
-        { type: 'video', src: asset('/assets/experience/e3-vid.mp4') },
         { type: 'image', src: asset('/assets/experience/e3-2.jpg') }
       ]
     }
