@@ -100,75 +100,71 @@ export const content = {
   experience: [
     {
       id: 'e1',
-      role: 'Software Engineering Intern',
-      organization: 'Tech Corp Inc.',
-      logo: 'TC',
-      dates: 'May 2023 - Aug 2023',
-      location: 'San Francisco, CA (Remote)',
-      type: 'Internship',
+      role: 'System Integration and UAV Design Engineer',
+      organization: 'Octaknight Labs Pvt. Ltd.',
+      logo: 'OKL',
+      dates: 'Sep 2025 - present',
+      location: 'Belagavi, Karnataka, India',
+      type: ['Internship', 'Full-time'],
       points: [
-        'Developed and maintained RESTful APIs serving 10k+ daily users.',
-        'Optimized database queries, reducing response times by 30%.',
-        'Collaborated with cross-functional teams to deliver new features.'
+        'Designed and developed structural components for UAVs using CAD and Manufactured them using CFRP and FDM.',
+        'Lead the development of a CNC hot-wire cutting machine for UAV wing fabrication and Rapid Prototyping.',
+        'Integrated autonomous flight systems using Mission Planner',
       ],
-      tags: ['Node.js', 'Express', 'PostgreSQL'],
+      tags: ['CAD', 'FDM', 'UAV Design', 'Mission Planner'],
       metrics: [
-        { value: '10k+', label: 'Daily Users' },
-        { value: '30%', label: 'Speed Increase' }
+        { value: '1+ Years', label: 'FDM Experience' }
       ],
       media: [
-        { type: 'image', src: asset('/assets/experience/e1-1.jpg') },
-        { type: 'video', src: asset('/assets/experience/e1-vid.mp4') },
-        { type: 'image', src: asset('/assets/experience/e1-2.jpg') }
+        { type: 'image', src: asset('/assets/experience/e1-1.png') },
+        { type: 'image', src: asset('/assets/experience/e1-2.jpeg') },
+        { type: 'link', src: 'https://img.youtube.com/vi/ps9foRAax7w/maxresdefault.jpg', href: 'https://youtu.be/ps9foRAax7w', label: 'Watch video' } ,
+        { type: 'image', src: asset('/assets/experience/e1-3.jpeg') }
       ]
     },
     {
       id: 'e2',
-      role: 'Undergraduate Researcher',
-      organization: 'University Labs',
-      logo: 'UL',
-      dates: 'Jan 2022 - May 2023',
-      location: 'University Campus',
-      type: 'Part-time',
+      role: 'Mechanical Design Intern',
+      organization: 'Polyflow Precision Pvt. Ltd.',
+      logo: 'PF',
+      dates: 'Oct 2024 - Nov 2025',
+      location: 'Belagavi, Karnataka, India',
+      type: 'Internship',
       points: [
-        'Conducted research on distributed systems and fault tolerance.',
-        'Published a paper in a peer-reviewed undergraduate journal.',
-        'Prototyped a novel consensus algorithm in Go.'
+        'Designed and developed mechanical components for precision manufacturing.',
+        'Utilized Solidworks for 3D modeling and GD&T for dimensioning and tolerancing.',
       ],
-      tags: ['Go', 'Distributed Systems', 'Research'],
+      tags: ['Solidworks', 'GDandT',],
       metrics: [
-        { value: '1', label: 'Publication' }
+        { value: '1+ Years', label: 'Manufacturing Experience' }
       ],
       media: [
-        { type: 'image', src: asset('/assets/experience/e2-1.jpg') },
-        { type: 'video', src: asset('/assets/experience/e2-vid.mp4') },
-        { type: 'image', src: asset('/assets/experience/e2-2.jpg') }
+        { type: 'image', src: asset('/assets/experience/e2-1.jpeg') }
       ]
     },
     {
       id: 'e3',
-      role: 'Freelance Web Developer',
-      organization: 'Self-Employed',
-      logo: 'SE',
-      dates: 'Present',
-      location: 'Remote',
-      type: 'Freelance',
+      role: 'Technical Team Lead and Treasurer',
+      organization: 'ASME Student Chapter, KLS GIT',
+      logo: 'ASME',
+      dates: 'March 2025 - February 2026',
+      location: 'KLS GIT, Belagavi, Karnataka, India',
+      type: 'Leadership',
       points: [
-        'Designed and built responsive websites for local businesses.',
-        'Implemented custom CMS solutions using Headless architectures.',
-        'Managed client communications and project timelines.'
+        'Led Multiple teams to ASME EFx National level competitions.',
+        'Organized Technical events and Saw through the financial management of the Club.',
       ],
-      tags: ['React', 'Next.js', 'Tailwind'],
-      metrics: [],
+      tags: ['Team Management', 'Financial Management', 'Technical Leadership'],
+      metrics: [{ value: '2', label: 'Technical Events Organized', link: 'https://www.instagram.com/asme_git/?hl=en' }],
       media: [
-        { type: 'image', src: asset('/assets/experience/e3-1.jpg') },
+        { type: 'image', src: asset('/assets/experience/e3-1.jpeg') },
         { type: 'video', src: asset('/assets/experience/e3-vid.mp4') },
         { type: 'image', src: asset('/assets/experience/e3-2.jpg') }
       ]
     }
   ],
   skills: {
-    categories: ['All', 'Frontend', 'Backend', 'Tools', 'Soft Skills'],
+    categories: ['All', 'CAD', '', 'Tools', 'Soft Skills'],
     items: [
       { name: 'Solidworks', category: 'CAD', level: 'Good', icon: 'Solidworks' },
       { name: 'JavaScript', category: 'Frontend', level: 'Advanced', icon: 'javascript' },
@@ -198,9 +194,9 @@ export const content = {
         icon: 'GraduationCap',
         degree: 'B.E. AERONAUTICAL ENGINEERING',
         institution: 'KLS Gogte Institute of Technology, Belagavi',
-        focus: 'UAV Systems · Structures · Additive Manufacturing · Robotics',
+        focus: 'Fluid Mechanics · Structures · Propulsion · Aerodynamics',
         score: '7.5 / 10',
-        caption: '7.5 / 10'
+        caption: 'CGPA'
       },
       {
         id: 'ed2',
@@ -217,8 +213,8 @@ export const content = {
       {
         id: 'ed3',
         level: 'SCHOOL',
-        startYear: '2020',
-        endYear: '',
+        startYear: '2008',
+        endYear: '2020',
         icon: 'School',
         degree: 'SECONDARY SCHOOL',
         institution: "St. Xavier's High School, Belagavi",
