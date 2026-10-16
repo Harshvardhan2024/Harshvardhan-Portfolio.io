@@ -18,7 +18,7 @@ export const content = {
     email: 'harshvardhanpatil099@gmail.com',
     phone: '+91 8123347973',
     location: 'Belagavi, Karnataka, India',
-    resumeUrl: asset('c:\Users\harsh\Downloads\Harshvardhan_Patil_Resume_.pdf'),
+    resumeUrl: asset('/assets/Harshvardhan_Patil_Resume_.pdf'),
     socials: [
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/harshvardhan-patil-482757267/', icon: 'linkedin' },
       { name: 'GitHub', url: 'https://github.com/harshvardhan2024', icon: 'github' },
