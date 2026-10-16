@@ -30,7 +30,7 @@ const AchievementCard = ({ item, isEnlarged = false, isDimmed = false }) => {
       )}
 
       {/* Bottom frosted-glass band — absolute, no margin, backdrop-blur */}
-      <div className="absolute bottom-0 left-0 right-0 z-[2] px-3.5 py-2.5 sm:px-4 sm:py-3 bg-black/40 backdrop-blur-md border-t border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] text-left">
+      <div className="absolute bottom-0 left-0 right-0 z-[2] px-3.5 py-2.5 sm:px-4 sm:py-3 bg-black/40 backdrop-blur border-t border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] text-left">
         <h3 className="font-heading font-bold text-white text-sm sm:text-base truncate leading-snug block">
           {item.title}
         </h3>
