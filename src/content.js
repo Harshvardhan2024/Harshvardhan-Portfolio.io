@@ -105,7 +105,7 @@ export const content = {
       logo: 'OKL',
       dates: 'Sep 2025 - present',
       location: 'Belagavi, Karnataka, India',
-      type: ['Internship', 'Full-time'],
+      type: ['Internship', ' / Full-time'],
       points: [
         'Designed and developed structural components for UAVs using CAD and Manufactured them using CFRP and FDM.',
         'Lead the development of a CNC hot-wire cutting machine for UAV wing fabrication and Rapid Prototyping.',
@@ -127,7 +127,7 @@ export const content = {
       role: 'Mechanical Design Intern',
       organization: 'Polyflow Precision Pvt. Ltd.',
       logo: 'PF',
-      dates: 'Oct 2024 - Nov 2025',
+      dates: 'Oct 2024 - Nov 2024',
       location: 'Belagavi, Karnataka, India',
       type: 'Internship',
       points: [
@@ -136,7 +136,6 @@ export const content = {
       ],
       tags: ['Solidworks', 'GDandT',],
       metrics: [
-        { value: '1+ Years', label: 'Manufacturing Experience' }
       ],
       media: [
         { type: 'image', src: asset('/assets/experience/e2-1.jpeg') }
@@ -177,11 +176,11 @@ export const content = {
     ]
   },
   achievements: [
-    { id: 'a1', title: 'First Place', description: 'National Coding Hackathon 2023', image: asset('/assets/achievements/a1.jpg') },
-    { id: 'a2', title: 'Dean\'s List', description: 'Consistently achieved top 5% of class', image: asset('/assets/achievements/a2.jpg') },
-    { id: 'a3', title: 'Open Source Contributor', description: 'Merged 20+ PRs in major frameworks', image: asset('/assets/achievements/a3.jpg') },
-    { id: 'a4', title: 'Best Project Award', description: 'Senior Capstone Design Expo', image: asset('/assets/achievements/a4.jpg') },
-    { id: 'a5', title: 'Speaker', description: 'Tech Conference 2022', image: asset('/assets/achievements/a5.jpg') },
+    { id: 'a1', title: 'EFx-India 2025', description: 'Won first place and $1000 at ASME EFx SDC and IAM3D', image: asset('/assets/achievements/a1.jpeg') },
+    { id: 'a2', title: 'ASME EFx VCE', description: 'Won first place and $1000 in SDC EFx VCE', image: asset('/assets/achievements/a2.jpeg') },
+    { id: 'a3', title: 'IMECE India 2025', description: 'Secured 4th place among 52 teams', image: asset('/assets/achievements/a3.png') },
+    { id: 'a4', title: 'EFx-India SDC 2026', description: 'Won first place at ASME EFx SDC 2026', image: asset('/assets/achievements/a4.jpg') },
+    { id: 'a5', title: 'EFx-India IAM3D 2026', description: 'Won first place at ASME EFx IAM3D 2026', image: asset('/assets/achievements/a5.png') },
     { id: 'a6', title: 'Certification', description: 'AWS Solutions Architect Associate', image: asset('/assets/achievements/a6.jpg') }
   ],
   education: {
