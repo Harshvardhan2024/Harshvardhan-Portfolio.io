@@ -1,17 +1,59 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { content } from '../content';
-import { FaReact, FaNodeJs, FaPython, FaDocker, FaGitAlt, FaStar } from 'react-icons/fa';
-import { SiJavascript } from 'react-icons/si';
+
+// FontAwesome
+import { FaUserTie, FaComments, FaStar } from 'react-icons/fa';
+
+// Simple Icons (brand logos)
+import { SiAutocad, SiAnsys, SiPython } from 'react-icons/si';
+
+// Material Design Icons
+import { MdPrecisionManufacturing, MdEngineering } from 'react-icons/md';
+
+// Tabler Icons
+import {
+  TbAssembly,
+  TbRuler,
+  TbRocket,
+  TbWind,
+  TbBuildingBridge2,
+  TbHexagon3D,
+  TbGizmo,
+} from 'react-icons/tb';
+
+// Game Icons
+import { GiMechanicalArm } from 'react-icons/gi';
+
+// Icon size shared class
+const S = 'w-10 h-10';
 
 const iconMap = {
-  react: <FaReact className="w-10 h-10 text-[#61DAFB]" />,
-  javascript: <SiJavascript className="w-10 h-10 text-[#F7DF1E]" />,
-  nodejs: <FaNodeJs className="w-10 h-10 text-[#339933]" />,
-  python: <FaPython className="w-10 h-10 text-[#3776AB]" />,
-  docker: <FaDocker className="w-10 h-10 text-[#2496ED]" />,
-  git: <FaGitAlt className="w-10 h-10 text-[#F05032]" />,
-  star: <FaStar className="w-10 h-10 text-accent" />,
+  // CAD
+  solidworks: <MdPrecisionManufacturing className={`${S} text-[#C9462A]`} />,   // Solidworks red
+  autocad:    <SiAutocad               className={`${S} text-[#CC0000]`} />,    // AutoCAD red
+  gdt:        <TbRuler                 className={`${S} text-accent`} />,        // GD&T → ruler
+  fdm:        <TbHexagon3D             className={`${S} text-accent`} />,        // Fused Deposition → 3-D hex
+  catia:      <MdEngineering           className={`${S} text-[#005B8E]`} />,     // CATIA → engineering icon (Dassault blue)
+  fusion360:  <GiMechanicalArm         className={`${S} text-[#F79420]`} />,     // Fusion 360 → mechanical arm (Autodesk orange)
+  plm:        <TbAssembly              className={`${S} text-accent`} />,        // PLM → assembly
+
+  // Simulation & Programming
+  ansys:      <SiAnsys                 className={`${S} text-[#FFB71B]`} />,    // Ansys yellow
+  matlab:     <TbGizmo                 className={`${S} text-[#0076A8]`} />,    // Matlab → gizmo (Mathworks blue)
+  python:     <SiPython                className={`${S} text-[#3776AB]`} />,    // Python blue
+
+  // Engineering
+  propulsion:   <TbRocket             className={`${S} text-accent`} />,
+  aerodynamics: <TbWind               className={`${S} text-accent`} />,
+  structures:   <TbBuildingBridge2    className={`${S} text-accent`} />,
+
+  // Soft Skills
+  leadership:    <FaUserTie           className={`${S} text-accent`} />,
+  communication: <FaComments          className={`${S} text-accent`} />,
+
+  // Fallback
+  star: <FaStar className={`${S} text-accent`} />,
 };
 
 const Skills = () => {

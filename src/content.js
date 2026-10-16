@@ -158,16 +158,23 @@ export const content = {
     }
   ],
   skills: {
-    categories: ['All', 'CAD', '', 'Tools', 'Soft Skills'],
+    categories: ['All', 'CAD', 'Simulation and  Programming', 'Engineering', 'Tools', 'Soft Skills'],
     items: [
-      { name: 'Solidworks', category: 'CAD', level: 'Good', icon: 'Solidworks' },
-      { name: 'JavaScript', category: 'Frontend', level: 'Advanced', icon: 'javascript' },
-      { name: 'Node.js', category: 'Backend', level: 'Intermediate', icon: 'nodejs' },
-      { name: 'Python', category: 'Backend', level: 'Advanced', icon: 'python' },
-      { name: 'Docker', category: 'Tools', level: 'Intermediate', icon: 'docker' },
-      { name: 'Git', category: 'Tools', level: 'Advanced', icon: 'git' },
-      { name: 'Leadership', category: 'Soft Skills', level: 'Advanced', icon: 'star' },
-      { name: 'Communication', category: 'Soft Skills', level: 'Advanced', icon: 'star' }
+      { name: 'Solidworks',               category: 'CAD',                          level: 'Good', icon: 'solidworks' },
+      { name: 'PLM',                       category: 'Tools',                         level: 'Good', icon: 'plm' },
+      { name: 'GD&T',                      category: 'CAD',                          level: 'Good', icon: 'gdt' },
+      { name: 'Propulsion',                category: 'Engineering',                   level: 'Good', icon: 'propulsion' },
+      { name: 'Aerodynamics',              category: 'Engineering',                   level: 'Good', icon: 'aerodynamics' },
+      { name: 'Structures',                category: 'Engineering',                   level: 'Good', icon: 'structures' },
+      { name: 'AutoCAD',                   category: 'CAD',                          level: 'Good', icon: 'autocad' },
+      { name: 'Fused Deposition Modelling',category: 'CAD',                          level: 'Good', icon: 'fdm' },
+      { name: 'Ansys',                     category: 'Simulation and  Programming',  level: 'Good', icon: 'ansys' },
+      { name: 'CATIA V5',                  category: 'CAD',                          level: 'Good', icon: 'catia' },
+      { name: 'Fusion 360',                category: 'CAD',                          level: 'Good', icon: 'fusion360' },
+      { name: 'Matlab',                    category: 'Simulation and  Programming',  level: 'Good', icon: 'matlab' },
+      { name: 'Python',                    category: 'Simulation and  Programming',  level: 'Good', icon: 'python' },
+      { name: 'Leadership',                category: 'Soft Skills',                  level: 'Good', icon: 'leadership' },
+      { name: 'Communication',             category: 'Soft Skills',                  level: 'Good', icon: 'communication' }
     ]
   },
   achievements: [
@@ -221,8 +228,8 @@ export const content = {
   },
   contact: {
     formEndpoint: 'https://formspree.io/f/YOUR_ENDPOINT_HERE',
-    intro: 'Feel free to reach out for collaboration opportunities, technical inquiries, or full-time roles.',
-    closingLine: 'Designed & developed with precision and modern web engineering.'
+    intro: "Got a challenging concept? Let’s engineer the solution. Let's connect",
+    closingLine: 'Curiosity engineered.'
   }
 };
 export const contactConfig = {
