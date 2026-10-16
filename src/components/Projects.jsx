@@ -54,7 +54,8 @@ const Projects = () => {
                 </div>
                 
                 <div className="p-6 sm:p-8 pt-6 flex-1 flex flex-col">
-                  <div className="flex justify-between items-start gap-4 mb-3">
+                  {/* Changed to flex-col and items-start to stack title and role vertically */}
+                  <div className="flex flex-col items-start gap-3 mb-4">
                     <h3 className="text-xl sm:text-2xl font-display font-bold text-text group-hover:text-accent-text transition-colors">
                       {project.title}
                     </h3>
@@ -63,7 +64,8 @@ const Projects = () => {
                     </span>
                   </div>
                   
-                  <p className="text-text/80 font-body text-sm sm:text-base mb-6 line-clamp-2 leading-relaxed">
+                  {/* Removed line-clamp-2 so the full description is always visible */}
+                  <p className="text-text/80 font-body text-sm sm:text-base mb-6 leading-relaxed">
                     {project.description}
                   </p>
                   
