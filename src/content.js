@@ -100,7 +100,7 @@ export const content = {
       logo: 'OKL',
       dates: 'Sep 2025 - present',
       location: 'Belagavi, Karnataka, India',
-      type: ['Internship', ' / Full-time'],
+      type: ['Internship'],
       points: [
         'Designed and developed structural components for UAVs using CAD and Manufactured them using CFRP and FDM.',
         'Lead the development of a CNC hot-wire cutting machine for UAV wing fabrication and Rapid Prototyping.',
@@ -151,8 +151,7 @@ export const content = {
       tags: ['Team Management', 'Financial Management', 'Technical Leadership'],
       metrics: [{ value: '2', label: 'Technical Events Organized', link: 'https://www.instagram.com/asme_git/?hl=en' }],
       media: [
-        { type: 'image', src: asset('/assets/experience/e3-1.jpeg') },
-        { type: 'image', src: asset('/assets/experience/e3-2.jpg') }
+        { type: 'image', src: asset('/assets/experience/e3-1.jpeg') }
       ]
     }
   ],
@@ -187,8 +186,7 @@ export const content = {
     { id: 'a2', title: 'ASME EFx VCE', description: 'Won first place and $1000 in SDC EFx VCE', image: asset('/assets/achievements/a2.jpeg') },
     { id: 'a3', title: 'IMECE India 2025', description: 'Secured 4th place among 52 teams', image: asset('/assets/achievements/a3.png') },
     { id: 'a4', title: 'EFx-India SDC 2026', description: 'Won first place at ASME EFx SDC 2026', image: asset('/assets/achievements/a4.jpg') },
-    { id: 'a5', title: 'EFx-India IAM3D 2026', description: 'Won first place at ASME EFx IAM3D 2026', image: asset('/assets/achievements/a5.png') },
-    { id: 'a6', title: 'Certification', description: 'AWS Solutions Architect Associate', image: asset('/assets/achievements/a6.jpg') }
+    { id: 'a5', title: 'EFx-India IAM3D 2026', description: 'Won first place at ASME EFx IAM3D 2026', image: asset('/assets/achievements/a5.png') }
   ],
   education: {
     items: [
