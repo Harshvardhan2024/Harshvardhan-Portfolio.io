@@ -35,7 +35,7 @@ export const content = {
   },
   about: {
     photo: asset('/assets/profile/profile.jpg'),
-    paragraph: 'I’m fascinated by the journey from an idea on a screen to a system that actually flies. I work at the intersection of design, simulation, and hands-on experimentation, exploring how things can be built differently, made smarter, and pushed further. From shaping UAV prototypes to exploring computational engineering, I’m drawn to challenges where curiosity meets real-world constraints. I don’t just want to understand how things work—I want to build, test, break, refine, and make them work better. Ultimately, I’m here to engineer systems that turn bold ideas into flight.',
+    paragraph: 'I’m Harshvardhan Patil, an aeronautical engineer with a deep interest in rockets, gas turbine engines, planes and UAVs. I have hands-on experience designing engineering systems and working alongside teams to bring ideas to life, and I enjoy turning concepts into things that work in the real world. Curiosity and continuous learning drive everything I do, and I’m eager to bring that energy to practical aerospace systems. I’m ready to take on real challenges, learn fast and contribute from day one.',
     stats: [
       { label: 'Experience', value: '1+ years' },
       { label: 'National level Competitions', value: '5x' },
@@ -158,25 +158,31 @@ export const content = {
     }
   ],
   skills: {
-    categories: ['All', 'CAD', 'Simulation and  Programming', 'Engineering', 'Tools', 'Soft Skills'],
-    items: [
-      { name: 'Solidworks',               category: 'CAD',                          level: 'Good', icon: 'solidworks' },
-      { name: 'PLM',                       category: 'Tools',                         level: 'Good', icon: 'plm' },
-      { name: 'GD&T',                      category: 'CAD',                          level: 'Good', icon: 'gdt' },
-      { name: 'Propulsion',                category: 'Engineering',                   level: 'Good', icon: 'propulsion' },
-      { name: 'Aerodynamics',              category: 'Engineering',                   level: 'Good', icon: 'aerodynamics' },
-      { name: 'Structures',                category: 'Engineering',                   level: 'Good', icon: 'structures' },
-      { name: 'AutoCAD',                   category: 'CAD',                          level: 'Good', icon: 'autocad' },
-      { name: 'Fused Deposition Modelling',category: 'CAD',                          level: 'Good', icon: 'fdm' },
-      { name: 'Ansys',                     category: 'Simulation and  Programming',  level: 'Good', icon: 'ansys' },
-      { name: 'CATIA V5',                  category: 'CAD',                          level: 'Good', icon: 'catia' },
-      { name: 'Fusion 360',                category: 'CAD',                          level: 'Good', icon: 'fusion360' },
-      { name: 'Matlab',                    category: 'Simulation and  Programming',  level: 'Good', icon: 'matlab' },
-      { name: 'Python',                    category: 'Simulation and  Programming',  level: 'Good', icon: 'python' },
-      { name: 'Leadership',                category: 'Soft Skills',                  level: 'Good', icon: 'leadership' },
-      { name: 'Communication',             category: 'Soft Skills',                  level: 'Good', icon: 'communication' }
-    ]
-  },
+  categories: ['All', 'CAD & Design', 'Aerospace Engineering', 'Simulation & Programming', 'Manufacturing', 'Tools', 'Soft Skills'],
+  items: [
+    { name: 'SolidWorks',                category: 'CAD & Design',             icon: 'solidworks' },
+    { name: 'CATIA V5',                  category: 'CAD & Design',             icon: 'catia' },
+    { name: 'Fusion 360',                category: 'CAD & Design',             icon: 'fusion360' },
+    { name: 'AutoCAD',                   category: 'CAD & Design',             icon: 'autocad' },
+    { name: 'GD&T',                      category: 'CAD & Design',             icon: 'gdt' },
+
+    { name: 'Aerodynamics',              category: 'Aerospace Engineering',    icon: 'aerodynamics' },
+    { name: 'Propulsion',                category: 'Aerospace Engineering',    icon: 'propulsion' },
+    { name: 'Structures',                category: 'Aerospace Engineering',    icon: 'structures' },
+
+    { name: 'Ansys',                     category: 'Simulation & Programming', icon: 'ansys' },
+    { name: 'MATLAB',                    category: 'Simulation & Programming', icon: 'matlab' },
+    { name: 'Python',                    category: 'Simulation & Programming', icon: 'python' },
+
+    { name: 'FDM 3D Printing',           category: 'Manufacturing',            icon: 'fdm' },
+
+
+    { name: 'PLM',                       category: 'Tools',                    icon: 'plm' },
+  
+    { name: 'Teamwork & Collaboration',  category: 'Soft Skills',              icon: 'leadership' },
+    { name: 'Communication',             category: 'Soft Skills',              icon: 'communication' }
+  ]
+},
   achievements: [
     { id: 'a1', title: 'EFx-India 2025', description: 'Won first place and $1000 at ASME EFx SDC and IAM3D', image: asset('/assets/achievements/a1.jpeg') },
     { id: 'a2', title: 'ASME EFx VCE', description: 'Won first place and $1000 in SDC EFx VCE', image: asset('/assets/achievements/a2.jpeg') },
