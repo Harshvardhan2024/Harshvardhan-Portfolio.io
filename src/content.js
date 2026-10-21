@@ -47,7 +47,7 @@ export const content = {
       title: 'Alteria - VTOL UAV',
       description: 'Alteria is an autonomous Tiltrotor VTOL UAV developed for reconnaissance and intelligent aerial operations. The project focuses on lightweight manufacturing, rapid prototyping, and reliable autonomous flight systems.',
       role: 'Structural Design and Mission Integration',
-      link: 'https://docs.google.com/presentation/d/1QafoLm-lPbaGFFYMmoSPD3V25Nrehy0s/edit?usp=drive_link&ouid=100939012069256704647&rtpof=true&sd=true',
+      link: 'https://drive.google.com/file/d/1wLTkXk5ArWOEzDUkIcQDXlva8VEjabR_/view?usp=sharing',
       tags: ['React', 'Node.js', 'Python'],
       media: [
         { type: 'link', src: 'https://img.youtube.com/vi/ISmoAcUX9rk/maxresdefault.jpg', href: 'https://youtu.be/ISmoAcUX9rk', label: 'Watch video' },
