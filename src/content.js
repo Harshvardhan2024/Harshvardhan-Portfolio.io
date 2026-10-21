@@ -27,9 +27,8 @@ export const content = {
   },
   hero: {
     slides: [
-      { headline: 'HARSHVARDHAN', headlineGold: 'PATIL', subtitle: 'Curiousity Driven Mind' },
+      { headline: 'HARSHVARDHAN', headlineGold: 'PATIL', subtitle: 'Curiosity Driven Mind' },
       { headline: 'ENGINEERING', headlineGold: 'SOLUTIONS', subtitle: 'From Concepts to Flight' },
-      { headline: 'BEYOND THE', headlineGold: 'HORIZON', subtitle: 'Devoted to Building Systems that Fly' },
       { headline: 'AERONAUTICAL', headlineGold: 'ENGINEER', subtitle: 'Propulsion, Aerodynamics, CAD, FEA' }
     ]
   },
@@ -59,7 +58,7 @@ export const content = {
       id: 'p2',
       title: 'IMECE -Window cleaning Robot',
       description: 'AI-powered glass cleaning bot that grips strong, cleans deep, and endures flawlessly. Project built for IMECE Brainbolt round-1 which got shortlisted as best design of problem statement among 65 teams all over India',
-      role: 'Design Egineer',
+      role: 'Design Engineer',
       link: 'https://docs.google.com/presentation/d/1S6Eduz2iv_CYGhNp2oEdtD9WgwDg1BlHx_OJj6sOfBg/edit?usp=drive_link',
       tags: ['React Native', 'Firebase', 'GraphQL'],
       media: [
@@ -147,7 +146,7 @@ export const content = {
       type: 'Leadership',
       points: [
         'Led Multiple teams to ASME EFx National level competitions.',
-        'Organized Technical events and Saw through the financial management of the Club.',
+        'Organized technical events and managed the club’s finances.',
       ],
       tags: ['Team Management', 'Financial Management', 'Technical Leadership'],
       metrics: [{ value: '2', label: 'Technical Events Organized', link: 'https://www.instagram.com/asme_git/?hl=en' }],
